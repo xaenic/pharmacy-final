@@ -1,4 +1,7 @@
+import DeleteIcon from "@/components/icons/DeleteIcon";
+import EditIcon from "@/components/icons/EditIcon";
 import { getProducts } from "@/lib/db/db";
+import ActionButtons from "./ActionButtons";
 
 async function Table() {
   const { products } = await getProducts();
@@ -37,34 +40,34 @@ async function Table() {
         <tbody id="tbody" className="relative">
           {products?.map((e, i: number) => (
             <tr key={i} className="">
-              <td className="border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
+              <td className="font-semibold border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
                 {i + 1}
               </td>
-              <td className="border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
+              <td className="font-semibold border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
                 {e.product_name}
               </td>
-              <td className="border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
+              <td className="font-semibold border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
                 {e.code}
               </td>
-              <td className="border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
+              <td className="font-semibold border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
                 {e.price}
               </td>
-              <td className="border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
+              <td className="font-semibold border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
                 {e.brand}
               </td>
-              <td className="border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
+              <td className="font-semibold border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
                 sd
               </td>
-              <td className="border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
+              <td className="font-semibold border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
                 {e.quantity}
               </td>
               <td className="border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
-                <span className="bg-green-500 text-green-600 bg-opacity-20 px-2 p-1 rounded-md text-sm">
+                <span className="font-semibold  bg-green-500 text-green-600 bg-opacity-20 px-2 p-1 rounded-md text-sm">
                   In Stock
                 </span>
               </td>
               <td className="border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
-                :
+                <ActionButtons id={e.id} />
               </td>
             </tr>
           ))}

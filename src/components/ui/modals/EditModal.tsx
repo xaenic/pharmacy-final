@@ -2,21 +2,33 @@
 import { useFormState } from "react-dom";
 import CloseModal from "./CloseModal";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import useModalStore from "@/store/store";
-import { addNewCategory, addNewProduct } from "@/lib/action";
+import { addNewCategory, addNewProduct, updateNewProduct } from "@/lib/action";
 import Button from "../Forms/Button";
 import CategoryOptions from "../Forms/CategoryOptions";
+import { getProductById } from "@/lib/db/db";
 
-function ProductModal() {
+function EditModal({ id }: { id: string | null }) {
   const { setModal } = useModalStore();
-  const [state, formAction] = useFormState(addNewProduct, {
+  const [state, formAction] = useFormState(updateNewProduct, {
     message: "",
     errors: {
       name: [],
     },
   });
+
+  const [product, setProduct] = useState<any>({
+    product_name: "",
+    image: "",
+    price: "",
+    code: "",
+    quantity: "",
+    category_id: "",
+    brand: "",
+  });
+  const [loading, setLoading] = useState(true);
   const form = useRef(null);
   const router = useRouter();
   useEffect(() => {
@@ -32,6 +44,23 @@ function ProductModal() {
       }
     }
   }, [state, router, setModal]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!id) return;
+        const ok = await getProductById(id);
+        setProduct(ok);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData(); // Call fetchData immediately
+
+    // Specify dependencies: id and getProductById
+  }, [id]);
   return (
     <div className=" bg-black bg-opacity-5  text-gray-600 absolute top-0 bottom-0 left-0 right-0 z-10 flex items-center justify-center">
       <form
@@ -40,7 +69,7 @@ function ProductModal() {
         className="bg-white z-10 py-5 px-7  rounded-md shadow-lg flex flex-col gap-5"
       >
         <div className="flex justify-between gap-10 items-center">
-          <h1 className="text-sm font-semibold">New Product</h1>
+          <h1 className="text-sm font-semibold">Update Product {id}</h1>
           <CloseModal />
         </div>
         <div className="  flex gap-2 items-end justify-start">
@@ -51,9 +80,11 @@ function ProductModal() {
               <input
                 name="image"
                 type="text"
+                defaultValue={product?.image}
                 placeholder="Enter product image url"
                 className="text-sm bg-transparent outline-none"
               />
+              <input type="hidden" name="id_number" value={product?.id} />
             </div>
           </div>
         </div>
@@ -69,6 +100,7 @@ function ProductModal() {
               <input
                 name="product_name"
                 type="text"
+                defaultValue={product?.product_name}
                 className="text-sm bg-transparent outline-none"
                 placeholder="Enter product name"
               />
@@ -80,6 +112,7 @@ function ProductModal() {
               <input
                 name="code"
                 type="number"
+                defaultValue={product?.code}
                 placeholder="Enter product code"
                 className="text-sm bg-transparent outline-none"
               />
@@ -92,6 +125,7 @@ function ProductModal() {
                 name="price"
                 type="number"
                 placeholder="Enter product price"
+                defaultValue={product?.price}
                 className="text-sm bg-transparent outline-none"
               />
             </div>
@@ -103,6 +137,7 @@ function ProductModal() {
                 name="brand"
                 type="text"
                 placeholder="Enter product brand"
+                defaultValue={product?.brand}
                 className="text-sm bg-transparent outline-none"
               />
             </div>
@@ -114,6 +149,7 @@ function ProductModal() {
                 name="quantity"
                 type="number"
                 placeholder="Enter product quantity"
+                defaultValue={product?.quantity}
                 className="text-sm bg-transparent outline-none"
               />
             </div>
@@ -121,16 +157,11 @@ function ProductModal() {
           <div className="grid grid-cols-2 gap-5">
             <h2 className="text-sm my-auto">Category</h2>
             <select
+              defaultValue={product?.category_id}
               name="category"
               className="border border-gray-200 text-slate-400 text-sm p-2 rounded-md"
             >
-              <option
-                value="Java"
-                className="text-slate-300"
-                disabled
-                defaultValue={"Java"}
-                hidden
-              >
+              <option value="Java" className="text-slate-300" disabled hidden>
                 Choose Category
               </option>
               <CategoryOptions />
@@ -151,7 +182,7 @@ function ProductModal() {
             >
               Discard
             </span>
-            <Button color="bg-blue-500" name="Add Product" />
+            <Button color="bg-green-500" name="Update Product" />
           </div>
         </div>
       </form>
@@ -159,4 +190,4 @@ function ProductModal() {
   );
 }
 
-export default ProductModal;
+export default EditModal;

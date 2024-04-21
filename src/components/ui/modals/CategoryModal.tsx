@@ -31,7 +31,7 @@ function CategoryModal() {
         router.refresh();
       }
     }
-  }, [state, router]);
+  }, [state, router, setModal]);
   return (
     <div className=" bg-black bg-opacity-5  text-gray-600 absolute top-0 bottom-0 left-0 right-0 z-10 flex items-center justify-center">
       <form

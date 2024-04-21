@@ -5,6 +5,7 @@ const GithubIcon = () => {
       width="1.5em"
       height="1.5em"
       viewBox="0 0 24 24"
+      className="text-white "
     >
       <path
         fill="currentColor"

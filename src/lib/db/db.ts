@@ -40,7 +40,25 @@ export const addProduct = async (
 
   return ok;
 };
+export const updateProduct = async (
+  product_name: string,
+  image: string,
+  code: string,
+  price: string,
+  brand: string,
+  quantity: string,
+  category: string,
+  id: string
+) => {
+  const ok =
+    await sql`UPDATE product SET product_name = ${product_name}, image = ${image}, code = ${code}, price = ${price}, brand = ${brand}, quantity = ${quantity}, category_id = ${category} WHERE id = ${id}`;
+  return ok;
+};
 
+export const getProductById = async (id: string) => {
+  const ok = await sql`SELECT * FROM product WHERE id = ${id}`;
+  return ok.rows[0];
+};
 export const getProducts = async () => {
   const ok = await sql`SELECT * FROM product`;
   return {

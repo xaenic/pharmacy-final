@@ -18,16 +18,16 @@ export default function Inventory() {
         <div className="flex gap-3 mt-10 bg-white rounded-t-md p-3">
           <BigCard
             title="Categories"
-            color="bg-sky-500 bg-opacity-50 text-sky-600 font-semibold"
+            color="bg-sky-500  text-sky-600 font-semibold"
             Icon={<GithubIcon />}
           />
           <BigCard
             title="Total Products"
-            color="bg-orange-500 bg-opacity-50 text-orange-600 font-semibold"
+            color="bg-orange-400 text-orange-600 font-semibold"
             Icon={<GithubIcon />}
           />
         </div>
-        <div className="flex justify-between pt-10 items-center bg-white px-3">
+        <div className="flex-wrap gap-4 flex justify-between pt-10 items-center bg-white px-3">
           <div className="bg-white border-2 border-gray-400 rounded-md flex items-center p-1">
             <SearchIcon />
             <input
@@ -38,7 +38,11 @@ export default function Inventory() {
           </div>
           <AddButtons />
         </div>
-        <Suspense fallback={<p>Loading</p>}>
+        <Suspense
+          fallback={
+            <p className="text-center text-xl font-semibold text-blue-600"></p>
+          }
+        >
           <Table />
         </Suspense>
       </main>
