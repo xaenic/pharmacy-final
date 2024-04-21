@@ -44,7 +44,7 @@ async function Table() {
         </thead>
         <tbody id="tbody" className="relative">
           {products?.map((e, i: number) => (
-            <RowAnimated e={e} i={i} />
+            <RowAnimated key={i} e={e} i={i} />
           ))}
         </tbody>
       </table>
