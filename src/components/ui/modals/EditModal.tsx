@@ -68,7 +68,11 @@ function EditModal({ id, categories }: { id: string | null; categories: any }) {
       {loading ? (
         <FadeLoader color="#0EA5E9" width={3} />
       ) : (
-        <form
+        <motion.form
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
           ref={form}
           action={formAction}
           className="bg-white z-10 py-5 px-7  rounded-md shadow-lg flex flex-col gap-5"
@@ -205,7 +209,7 @@ function EditModal({ id, categories }: { id: string | null; categories: any }) {
               <Button color="bg-green-500" name="Update Product" />
             </div>
           </div>
-        </form>
+        </motion.form>
       )}
     </motion.div>
   );

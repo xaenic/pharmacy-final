@@ -74,8 +74,12 @@ function DeleteModal({ id }: { id: string | null }) {
       {loading ? (
         <FadeLoader color="#0EA5E9" width={3} />
       ) : (
-        <form
+        <motion.form
           ref={form}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
           action={formAction}
           className="bg-white z-10 py-5 px-7  rounded-md shadow-lg flex flex-col gap-5"
         >
@@ -124,7 +128,7 @@ function DeleteModal({ id }: { id: string | null }) {
               <Button color="bg-red-500" name="Delete" />
             </div>
           </div>
-        </form>
+        </motion.form>
       )}
     </motion.div>
   );
