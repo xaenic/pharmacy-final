@@ -85,7 +85,7 @@ function DeleteModal({ id }: { id: string | null }) {
         >
           <div className="flex justify-center gap-10 items-center">
             <h1 className="text-sm font-semibold text-center">
-              Delete Product <span className="text-blue-500">{name}</span>
+              Delete Product <span className="text-blue-500">{name}?</span>
             </h1>
           </div>
           <div className="  flex gap-2 items-end justify-center">
