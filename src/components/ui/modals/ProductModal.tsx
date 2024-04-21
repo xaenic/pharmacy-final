@@ -99,6 +99,19 @@ function ProductModal({ categories }: any) {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-5">
+            <h2 className="text-sm my-auto">Description</h2>
+            <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
+              <textarea
+                id="w3review"
+                name="description"
+                className="text-sm bg-transparent outline-none"
+                rows={4}
+                cols={50}
+                placeholder="Enter product description"
+              ></textarea>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-5">
             <h2 className="text-sm my-auto">Product Code</h2>
             <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
               <input
@@ -138,6 +151,17 @@ function ProductModal({ categories }: any) {
                 name="quantity"
                 type="number"
                 placeholder="Enter product quantity"
+                className="text-sm bg-transparent outline-none"
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-5">
+            <h2 className="text-sm my-auto">Product Type</h2>
+            <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
+              <input
+                name="type"
+                type="text"
+                placeholder="Enter product type"
                 className="text-sm bg-transparent outline-none"
               />
             </div>

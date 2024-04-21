@@ -62,6 +62,8 @@ export async function addNewProduct(prevState: any, formData: FormData) {
   const brand = formData.get("brand") as string;
   const quantity = formData.get("quantity") as string;
   const category = formData.get("category") as string;
+  const description = formData.get("description") as string;
+  const type = formData.get("type") as string;
   if (product_name.length == 0) {
     return {
       message: "fail",
@@ -86,7 +88,9 @@ export async function addNewProduct(prevState: any, formData: FormData) {
     price,
     brand,
     quantity,
-    category
+    category,
+    description,
+    type
   );
 
   return {
@@ -104,6 +108,8 @@ export async function updateNewProduct(prevState: any, formData: FormData) {
   const brand = formData.get("brand") as string;
   const quantity = formData.get("quantity") as string;
   const category = formData.get("category") as string;
+  const description = formData.get("description") as string;
+  const type = formData.get("type") as string;
   const id = formData.get("id_number") as string;
 
   if (product_name.length == 0) {
@@ -131,7 +137,9 @@ export async function updateNewProduct(prevState: any, formData: FormData) {
     brand,
     quantity,
     category,
-    id
+    id,
+    description,
+    type
   );
 
   return {

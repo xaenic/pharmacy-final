@@ -21,6 +21,9 @@ async function Table({ products }: any) {
               Product Name
             </th>
             <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
+              Description
+            </th>
+            <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
               CODE
             </th>
             <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
@@ -31,6 +34,9 @@ async function Table({ products }: any) {
             </th>
             <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
               Category
+            </th>
+            <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
+              Type
             </th>
             <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
               QUANTITY

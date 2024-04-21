@@ -33,10 +33,12 @@ export const addProduct = async (
   price: string,
   brand: string,
   quantity: string,
-  category: string
+  category: string,
+  description: string,
+  type: string
 ) => {
   const ok =
-    await sql`INSERT INTO product (product_name,image,code,price,brand,quantity,category_id) VALUES(${product_name}, ${image}, ${code}, ${price}, ${brand}, ${quantity}, ${category})`;
+    await sql`INSERT INTO product (product_name,image,code,price,brand,quantity,category_id,description,type) VALUES(${product_name}, ${image}, ${code}, ${price}, ${brand}, ${quantity}, ${category},${description},${type})`;
 
   return ok;
 };
@@ -52,10 +54,12 @@ export const updateProduct = async (
   brand: string,
   quantity: string,
   category: string,
-  id: string
+  id: string,
+  description: string,
+  type: string
 ) => {
   const ok =
-    await sql`UPDATE product SET product_name = ${product_name}, image = ${image}, code = ${code}, price = ${price}, brand = ${brand}, quantity = ${quantity}, category_id = ${category} WHERE id = ${id}`;
+    await sql`UPDATE product SET product_name = ${product_name}, description = ${description}, image = ${image}, code = ${code}, price = ${price}, brand = ${brand}, quantity = ${quantity}, category_id = ${category},type = ${type} WHERE id = ${id}`;
   return ok;
 };
 
@@ -65,7 +69,7 @@ export const getProductById = async (id: string) => {
 };
 export const getProducts = async () => {
   const ok =
-    await sql`SELECT * FROM product INNER JOIN category ON category.category_id = product.category_id`;
+    await sql`SELECT * FROM product INNER JOIN category ON category.category_id = product.category_id ORDER BY product_name`;
   return {
     products: ok.rows,
   };
