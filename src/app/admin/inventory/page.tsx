@@ -9,7 +9,10 @@ import BigCard from "@/components/ui/Widgets/BigCard";
 import { Suspense } from "react";
 export const dynamic = "force-dynamic";
 import { Toaster } from "react-hot-toast";
-export default function Inventory() {
+import { getCategories } from "@/lib/db/db";
+import { FadeLoader } from "react-spinners";
+export default async function Inventory() {
+  const options = await getCategories();
   return (
     <div className="flex min-h-screen bg-slate-200">
       <Toaster
@@ -22,7 +25,7 @@ export default function Inventory() {
       />
       <Sidebar />
       <main className="p-4 lg:ml-64  lg:pt-5 flex flex-col w-full relative">
-        <Modals />
+        <Modals categories={options.rows} />
         <Topbar title="Inventory" />
         <div className="flex gap-3 mt-10 bg-white rounded-t-md p-3">
           <BigCard
@@ -49,7 +52,9 @@ export default function Inventory() {
         </div>
         <Suspense
           fallback={
-            <p className="text-center text-xl font-semibold text-blue-600"></p>
+            <div className="flex justify-center mt-10">
+              <FadeLoader color="#0EA5E9" width={3} />
+            </div>
           }
         >
           <Table />

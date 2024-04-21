@@ -8,6 +8,7 @@ import useModalStore from "@/store/store";
 import { addNewCategory } from "@/lib/action";
 import Button from "../Forms/Button";
 import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 function CategoryModal() {
   const { setModal } = useModalStore();
   const [state, formAction] = useFormState(addNewCategory, {
@@ -34,7 +35,13 @@ function CategoryModal() {
     }
   }, [state, router, setModal]);
   return (
-    <div className=" bg-black bg-opacity-5  text-gray-600 absolute top-0 bottom-0 left-0 right-0 z-10 flex items-center justify-center">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className=" bg-black bg-opacity-5  text-gray-600 absolute top-0 bottom-0 left-0 right-0 z-10 flex items-center justify-center"
+    >
       <form
         ref={form}
         action={formAction}
@@ -93,7 +100,7 @@ function CategoryModal() {
           </div>
         </div>
       </form>
-    </div>
+    </motion.div>
   );
 }
 

@@ -17,7 +17,7 @@ function ActionButtons({ id, name }: { id: string; name: string }) {
           })
         }
       >
-        <EditIcon className="w-5 h-5 text-blue-500" />
+        <EditIcon className="cursor-pointer w-5 h-5 text-blue-500" />
       </div>
       <div
         onClick={() =>
@@ -29,7 +29,7 @@ function ActionButtons({ id, name }: { id: string; name: string }) {
           })
         }
       >
-        <DeleteIcon className="w-5 h-5 text-red-500" />
+        <DeleteIcon className="cursor-pointer w-5 h-5 text-red-500" />
       </div>
     </div>
   );

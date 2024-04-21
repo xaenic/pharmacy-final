@@ -10,7 +10,8 @@ import Button from "../Forms/Button";
 import CategoryOptions from "../Forms/CategoryOptions";
 import toast from "react-hot-toast";
 import Image from "next/image";
-function ProductModal() {
+import { motion } from "framer-motion";
+function ProductModal({ categories }: any) {
   const { setModal } = useModalStore();
 
   const [image, setImage] = useState<any>(null);
@@ -37,7 +38,13 @@ function ProductModal() {
     }
   }, [state, router, setModal]);
   return (
-    <div className=" bg-black bg-opacity-5  text-gray-600 absolute top-0 bottom-0 left-0 right-0 z-10 flex items-center justify-center">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className=" bg-black bg-opacity-5  text-gray-600 absolute top-0 bottom-0 left-0 right-0 z-10 flex items-center justify-center"
+    >
       <form
         ref={form}
         action={formAction}
@@ -150,7 +157,11 @@ function ProductModal() {
               >
                 Choose Category
               </option>
-              <CategoryOptions />
+              {categories?.map((e: any, i: number) => (
+                <option value={e.category_id} key={i}>
+                  {e.category_name}
+                </option>
+              ))}
             </select>
           </div>
         </div>
@@ -172,7 +183,7 @@ function ProductModal() {
           </div>
         </div>
       </form>
-    </div>
+    </motion.div>
   );
 }
 

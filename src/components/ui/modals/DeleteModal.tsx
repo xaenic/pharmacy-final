@@ -16,6 +16,9 @@ import CategoryOptions from "../Forms/CategoryOptions";
 import { getProductById } from "@/lib/db/db";
 import Image from "next/image";
 import toast from "react-hot-toast";
+import { FadeLoader } from "react-spinners";
+
+import { motion } from "framer-motion";
 function DeleteModal({ id }: { id: string | null }) {
   const { setModal, name } = useModalStore();
   const [state, formAction] = useFormState(deleteNewProduct, {
@@ -61,9 +64,15 @@ function DeleteModal({ id }: { id: string | null }) {
     // Specify dependencies: id and getProductById
   }, [id]);
   return (
-    <div className=" bg-black bg-opacity-5  text-gray-600 absolute top-0 bottom-0 left-0 right-0 z-10 flex items-center justify-center">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4 }}
+      className=" bg-black bg-opacity-5  text-gray-600 absolute top-0 bottom-0 left-0 right-0 z-10 flex items-center justify-center"
+    >
       {loading ? (
-        <p className="">Loading</p>
+        <FadeLoader color="#0EA5E9" width={3} />
       ) : (
         <form
           ref={form}
@@ -117,7 +126,7 @@ function DeleteModal({ id }: { id: string | null }) {
           </div>
         </form>
       )}
-    </div>
+    </motion.div>
   );
 }
 
