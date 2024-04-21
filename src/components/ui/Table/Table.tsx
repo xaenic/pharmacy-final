@@ -56,7 +56,7 @@ async function Table() {
                 {e.brand}
               </td>
               <td className="font-semibold border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
-                sd
+                {e.category_name}
               </td>
               <td className="font-semibold border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
                 {e.quantity}
@@ -67,7 +67,7 @@ async function Table() {
                 </span>
               </td>
               <td className="border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">
-                <ActionButtons id={e.id} />
+                <ActionButtons id={e.id} name={e.product_name} />
               </td>
             </tr>
           ))}

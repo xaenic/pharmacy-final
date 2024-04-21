@@ -40,6 +40,10 @@ export const addProduct = async (
 
   return ok;
 };
+export const deleteProduct = async (id: string) => {
+  const ok = await sql`DELETE FROM product WHERE id = ${id}`;
+  return ok;
+};
 export const updateProduct = async (
   product_name: string,
   image: string,
@@ -60,7 +64,8 @@ export const getProductById = async (id: string) => {
   return ok.rows[0];
 };
 export const getProducts = async () => {
-  const ok = await sql`SELECT * FROM product`;
+  const ok =
+    await sql`SELECT * FROM product INNER JOIN category ON category.category_id = product.category_id`;
   return {
     products: ok.rows,
   };

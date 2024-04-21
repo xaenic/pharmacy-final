@@ -1,6 +1,7 @@
 "use client";
 
 import CategoryModal from "@/components/ui/modals/CategoryModal";
+import DeleteModal from "@/components/ui/modals/DeleteModal";
 import EditModal from "@/components/ui/modals/EditModal";
 import ProductModal from "@/components/ui/modals/ProductModal";
 import useModalStore from "@/store/store";
@@ -17,6 +18,7 @@ function Modals() {
       {active && shown == "Category" ? <CategoryModal /> : null}
       {active && shown == "Product" ? <ProductModal /> : null}
       {active && shown == "Edit" ? <EditModal id={id} /> : null}
+      {active && shown == "Delete" ? <DeleteModal id={id} /> : null}
     </>
   );
 }

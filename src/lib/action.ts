@@ -3,7 +3,7 @@ import { auth, signIn } from "@/auth";
 import { z } from "zod";
 
 import { AuthError, Session } from "next-auth";
-import { addCategory, addProduct, updateProduct } from "./db/db";
+import { addCategory, addProduct, deleteProduct, updateProduct } from "./db/db";
 
 export async function authenticate(
   prevState: string | undefined,
@@ -134,6 +134,18 @@ export async function updateNewProduct(prevState: any, formData: FormData) {
     id
   );
 
+  return {
+    message: "Success",
+    errors: {
+      name: [],
+    },
+  };
+}
+
+export async function deleteNewProduct(prevState: any, formData: FormData) {
+  const id = formData.get("id_number") as string;
+
+  const ok = await deleteProduct(id);
   return {
     message: "Success",
     errors: {
