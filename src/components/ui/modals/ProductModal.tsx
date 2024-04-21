@@ -63,7 +63,7 @@ function ProductModal({ categories }: any) {
                 src={image}
                 alt="Avatar"
                 unoptimized={true}
-                className="rounded-md h-full w-full"
+                className="rounded-md h-full w-full object-cover"
               />
             ) : null}
           </div>

@@ -5,8 +5,7 @@ import ActionButtons from "./ActionButtons";
 import Image from "next/image";
 import RowAnimated from "./RowAnimated";
 
-async function Table() {
-  const { products } = await getProducts();
+async function Table({ products }: any) {
   return (
     <div id="tabbb" className="bg-white rounded-b-md overflow-x-auto">
       <table className="w-full mt-10 text-sm rounded-md text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
@@ -43,7 +42,7 @@ async function Table() {
           </tr>
         </thead>
         <tbody id="tbody" className="relative">
-          {products?.map((e, i: number) => (
+          {products?.map((e: any, i: number) => (
             <RowAnimated key={i} e={e} i={i} />
           ))}
         </tbody>

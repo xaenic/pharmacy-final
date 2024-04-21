@@ -3,6 +3,9 @@ import { usePathname } from "next/navigation";
 import LogoutButton from "../ui/Forms/LogoutButton";
 import Image from "next/image";
 import Link from "next/link";
+import ItemIcon from "../icons/ItemIcon";
+import TabIcon from "../icons/TabIcon";
+import DragIcon from "../icons/DragIcon";
 const Sidebar = () => {
   const path = usePathname();
   return (
@@ -68,62 +71,23 @@ const Sidebar = () => {
               path.toString() == "/admin/inventory" ? "bg-slate-900" : ""
             } flex gap-2 items-center hover:bg-slate-900  cursor-pointer text-white rounded-lg px-3 p-2`}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1em"
-              height="1em"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fill="currentColor"
-                d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8z"
-              />
-            </svg>
+            <ItemIcon />
             <span className="w-full">Inventory</span>
           </div>
         </Link>
-        {/* <section id="widget_2" className="mt-5 flex flex-col gap-5">
-          <div
-            className={`${
-              path.toString() == "/admin/orders" ? "bg-slate-900" : ""
-            } flex gap-2 items-center hover:bg-slate-900  cursor-pointer text-white rounded-lg px-3 p-2`}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1em"
-              height="1em"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fill="currentColor"
-                d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8z"
-              />
-            </svg>
-            <Link href="/admin/orders" className="w-full">
-              Orders
-            </Link>
-          </div>
-        </section> */}
+
         <section id="widget_2" className="mt-5 flex flex-col gap-5">
           <div className="flex gap-2 items-center hover:bg-slate-900 <?php if ($page_title == 'Students' || $parent[0] == 'Students') { echo 'bg-gray-900'; } ?> cursor-pointer text-white rounded-lg px-3 p-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="1em"
-              height="1em"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fill="currentColor"
-                d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8z"
-              />
-            </svg>
+            <DragIcon />
             <a href="./students" className="w-full">
               Transactions
             </a>
           </div>
         </section>
       </div>
-      <LogoutButton />
+      <div className="w-full flex justify-center">
+        <LogoutButton />
+      </div>
     </aside>
   );
 };

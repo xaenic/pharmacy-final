@@ -23,7 +23,7 @@ function RowAnimated({ e, i }: any) {
             src={e?.image}
             alt="Avatar"
             unoptimized={true}
-            className="rounded-md w-10 h-10"
+            className="rounded-md w-10 h-10 object-cover"
           />
         </td>
         <td className="font-semibold border px-4 py-4 border-none text-center text-xs md:text-sm text-gray-500">

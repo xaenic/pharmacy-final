@@ -4,10 +4,12 @@ function BigCard({
   color,
   title,
   Icon,
+  total,
 }: {
   color: string;
   title: string;
   Icon: any;
+  total: any;
 }) {
   return (
     <div className={`${color} p-5 rounded-md w-72 flex flex-col `}>
@@ -15,12 +17,12 @@ function BigCard({
         <h1>{title}</h1>
         <span>:</span>
       </div>
-      <GithubIcon />
+      {Icon}
       <div className="flex justify-between text-white  items-center">
-        <span className="mt-4 mb-3">44</span>
-        <span className="mt-4 mb-3">$123,244</span>
+        <span className="mt-4 mb-3">{total}</span>
+        <span className="mt-4 mb-3"></span>
       </div>
-      <small className="text-white ">Last 44 days</small>
+      <small className="text-white ">Last 14 days</small>
     </div>
   );
 }

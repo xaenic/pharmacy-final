@@ -9,10 +9,13 @@ import BigCard from "@/components/ui/Widgets/BigCard";
 import { Suspense } from "react";
 export const dynamic = "force-dynamic";
 import { Toaster } from "react-hot-toast";
-import { getCategories } from "@/lib/db/db";
+import { getCategories, getProducts } from "@/lib/db/db";
 import { FadeLoader } from "react-spinners";
+import CategoryIcon from "@/components/icons/CategoryIcon";
+import FolderIcon from "@/components/icons/FolderIcon";
 export default async function Inventory() {
   const options = await getCategories();
+  const { products } = await getProducts();
   return (
     <div className="flex min-h-screen bg-slate-200">
       <Toaster
@@ -30,13 +33,15 @@ export default async function Inventory() {
         <div className="flex gap-3 mt-10 bg-white rounded-t-md p-3">
           <BigCard
             title="Categories"
-            color="bg-sky-500  text-sky-600 font-semibold"
-            Icon={<GithubIcon />}
+            total={options.rows.length}
+            color="bg-sky-400  text-sky-600 font-semibold"
+            Icon={<CategoryIcon className="text-white w-14 h-14 rounded-md" />}
           />
           <BigCard
             title="Total Products"
-            color="bg-orange-400 text-orange-600 font-semibold"
-            Icon={<GithubIcon />}
+            total={products.length}
+            color="bg-orange-400  text-sky-600 font-semibold"
+            Icon={<FolderIcon className="text-white w-14 h-14 rounded-md" />}
           />
         </div>
         <div className="flex-wrap gap-4 flex justify-between pt-10 items-center bg-white px-3">
@@ -57,7 +62,7 @@ export default async function Inventory() {
             </div>
           }
         >
-          <Table />
+          <Table products={products} />
         </Suspense>
       </main>
     </div>
