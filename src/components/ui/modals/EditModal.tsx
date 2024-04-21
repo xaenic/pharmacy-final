@@ -63,7 +63,7 @@ function EditModal({ id, categories }: { id: string | null; categories: any }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
-      className=" bg-black bg-opacity-5  text-gray-600 absolute top-0 bottom-0 left-0 right-0 z-10 flex items-center justify-center"
+      className=" p-4 lg:ml-64  lg:pt-5 bg-black bg-opacity-5 fixed text-gray-600  top-0 bottom-0 left-0 right-0 z-10 flex items-center justify-center"
     >
       {loading ? (
         <FadeLoader color="#0EA5E9" width={3} />
