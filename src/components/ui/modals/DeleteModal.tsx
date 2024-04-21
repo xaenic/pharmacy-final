@@ -15,7 +15,7 @@ import Button from "../Forms/Button";
 import CategoryOptions from "../Forms/CategoryOptions";
 import { getProductById } from "@/lib/db/db";
 import Image from "next/image";
-
+import toast from "react-hot-toast";
 function DeleteModal({ id }: { id: string | null }) {
   const { setModal, name } = useModalStore();
   const [state, formAction] = useFormState(deleteNewProduct, {
@@ -38,6 +38,7 @@ function DeleteModal({ id }: { id: string | null }) {
           active: false,
           shown: null,
         });
+        toast.success("Successfully deleted 🗑️");
         router.refresh();
       }
     }

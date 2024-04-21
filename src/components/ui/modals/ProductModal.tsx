@@ -2,15 +2,18 @@
 import { useFormState } from "react-dom";
 import CloseModal from "./CloseModal";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import useModalStore from "@/store/store";
 import { addNewCategory, addNewProduct } from "@/lib/action";
 import Button from "../Forms/Button";
 import CategoryOptions from "../Forms/CategoryOptions";
-
+import toast from "react-hot-toast";
+import Image from "next/image";
 function ProductModal() {
   const { setModal } = useModalStore();
+
+  const [image, setImage] = useState<any>(null);
   const [state, formAction] = useFormState(addNewProduct, {
     message: "",
     errors: {
@@ -28,6 +31,7 @@ function ProductModal() {
           active: false,
           shown: null,
         });
+        toast.success("Successfully added ✅");
         router.refresh();
       }
     }
@@ -44,11 +48,24 @@ function ProductModal() {
           <CloseModal />
         </div>
         <div className="  flex gap-2 items-end justify-start">
-          <div className="w-24 h-24 border border-dashed border-blue-500 rounded-lg"></div>
+          <div className="w-24 h-24 border border-dashed border-blue-500 rounded-lg">
+            {image ? (
+              <Image
+                width={32}
+                height={32}
+                src={image}
+                alt="Avatar"
+                unoptimized={true}
+                className="rounded-md h-full w-full"
+              />
+            ) : null}
+          </div>
           <div className="flex flex-col gap-2">
             <h1 className="text-xs text-blue-500 font-semibold">Image URL</h1>
             <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
               <input
+                onChange={(e) => setImage(e.target.value)}
+                value={image ?? ""}
                 name="image"
                 type="text"
                 placeholder="Enter product image url"

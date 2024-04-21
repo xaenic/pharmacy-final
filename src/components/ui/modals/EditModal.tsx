@@ -10,7 +10,7 @@ import Button from "../Forms/Button";
 import CategoryOptions from "../Forms/CategoryOptions";
 import { getProductById } from "@/lib/db/db";
 import Image from "next/image";
-
+import toast from "react-hot-toast";
 function EditModal({ id }: { id: string | null }) {
   const { setModal } = useModalStore();
   const [state, formAction] = useFormState(updateNewProduct, {
@@ -33,6 +33,7 @@ function EditModal({ id }: { id: string | null }) {
           active: false,
           shown: null,
         });
+        toast.success("Successfully updated ✅");
         router.refresh();
       }
     }

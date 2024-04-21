@@ -8,9 +8,18 @@ import Table from "@/components/ui/Table/Table";
 import BigCard from "@/components/ui/Widgets/BigCard";
 import { Suspense } from "react";
 export const dynamic = "force-dynamic";
+import { Toaster } from "react-hot-toast";
 export default function Inventory() {
   return (
     <div className="flex min-h-screen bg-slate-200">
+      <Toaster
+        toastOptions={{
+          style: {
+            background: "#0EA5E9",
+            color: "#fff",
+          },
+        }}
+      />
       <Sidebar />
       <main className="p-4 lg:ml-64  lg:pt-5 flex flex-col w-full relative">
         <Modals />

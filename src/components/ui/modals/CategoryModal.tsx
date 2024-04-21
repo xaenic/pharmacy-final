@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import useModalStore from "@/store/store";
 import { addNewCategory } from "@/lib/action";
 import Button from "../Forms/Button";
-
+import toast from "react-hot-toast";
 function CategoryModal() {
   const { setModal } = useModalStore();
   const [state, formAction] = useFormState(addNewCategory, {
@@ -28,6 +28,7 @@ function CategoryModal() {
           active: false,
           shown: null,
         });
+        toast.success("Successfully added ✅");
         router.refresh();
       }
     }
