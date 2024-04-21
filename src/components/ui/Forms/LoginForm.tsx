@@ -38,7 +38,7 @@ const LoginForm = () => {
           </div>
         </div>
         <div className="">
-          <Button name="Login" />
+          <Button color="bg-gray-800" name="Login" />
         </div>
       </form>
     </>

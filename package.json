@@ -16,7 +16,9 @@
     "next-auth": "^5.0.0-beta.9",
     "react": "^18",
     "react-dom": "^18",
-    "zod": "^3.22.5"
+    "toastify": "^2.0.1",
+    "zod": "^3.22.5",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/node": "^20",

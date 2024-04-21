@@ -15,7 +15,7 @@ export default async function Admin(): Promise<JSX.Element> {
     <div className="flex min-h-screen bg-slate-200">
       <Sidebar />
       <main className="p-4 lg:ml-64  lg:pt-5 flex flex-col w-full">
-        <Topbar />
+        <Topbar title="Dashboard" />
 
         <div className="px-0 p-3 mt-3">
           <h1>Welcome ! {session?.user?.name}</h1>

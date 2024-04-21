@@ -1,9 +1,9 @@
 import Image from "next/image";
 import SearchIcon from "../icons/SearchIcon";
-function Topbar() {
+function Topbar({ title }: { title: string }) {
   return (
     <div className="flex justify-between items-center border-b border-gray-300 pb-3">
-      <h2 className="text-2xl font-semibold">Dashboard</h2>
+      <h2 className="text-2xl font-semibold">{title}</h2>
       <div className="flex items-center gap-3">
         <div className="bg-white rounded-md flex items-center pr-2">
           <input

@@ -10,3 +10,20 @@ const usersTable = `CREATE TABLE IF NOT EXISTS users (
   gender VARCHAR(100) NOT NULL,
   role VARCHAR(100) NOT NULL
 );`;
+
+const categoryTable = `CREATE TABLE  category (
+  category_id SERIAL PRIMARY KEY,
+  category_name VARCHAR(100) NOT NULL,
+  capacity VARCHAR(100) NOT NULL,
+);`;
+const medicineTable = `CREATE TABLE product (
+  id SERIAL PRIMARY KEY,
+  product_name VARCHAR(100) NOT NULL,
+  image VARCHAR(100) NOT NULL,
+  price DECIMAL(10, 2) NOT NULL,
+  code INT NOT NULL,
+  quantity INT NOT NULL,
+  category_id INT NOT NULL REFERENCES category(category_id),
+  brand VARCHAR(20) NOT NULL
+);
+`;
