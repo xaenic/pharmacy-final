@@ -11,6 +11,7 @@ export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
+      name: "AdminLogin",
       async authorize(credentials) {
         const parsedCredentials = z
           .object({ email: z.string().email(), password: z.string().min(6) })
@@ -29,6 +30,8 @@ export const { auth, signIn, signOut } = NextAuth({
               return {
                 name: user.firstname,
                 email: user.email,
+                role: user.role,
+                user,
               };
           }
         }
@@ -42,8 +45,14 @@ export const { auth, signIn, signOut } = NextAuth({
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({ token }) {
+    async jwt({ token, user }) {
+      if (user) token.user = user;
       return token;
+    },
+    async session({ session, token, user }) {
+      session = token.user as any;
+      console.log(session);
+      return session;
     },
   },
 });

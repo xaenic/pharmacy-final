@@ -9,6 +9,7 @@ export async function authenticate(
   prevState: string | undefined,
   formData: FormData
 ) {
+  formData.set("role", "admin");
   try {
     await signIn("credentials", formData);
   } catch (error) {
@@ -60,6 +61,7 @@ export async function addNewProduct(prevState: any, formData: FormData) {
   const code = formData.get("code") as string;
   const price = formData.get("price") as string;
   const brand = formData.get("brand") as string;
+  const manufacturer = formData.get("manufacturer") as string;
   const quantity = formData.get("quantity") as string;
   const category = formData.get("category") as string;
   const description = formData.get("description") as string;
@@ -87,6 +89,7 @@ export async function addNewProduct(prevState: any, formData: FormData) {
     code,
     price,
     brand,
+    manufacturer,
     quantity,
     category,
     description,
@@ -106,6 +109,7 @@ export async function updateNewProduct(prevState: any, formData: FormData) {
   const code = formData.get("code") as string;
   const price = formData.get("price") as string;
   const brand = formData.get("brand") as string;
+  const manufacturer = formData.get("manufacturer") as string;
   const quantity = formData.get("quantity") as string;
   const category = formData.get("category") as string;
   const description = formData.get("description") as string;
@@ -135,6 +139,7 @@ export async function updateNewProduct(prevState: any, formData: FormData) {
     code,
     price,
     brand,
+    manufacturer,
     quantity,
     category,
     id,
