@@ -1,7 +1,7 @@
 "use client";
 
 import CloseIcon from "@/components/icons/CloseIcon";
-import useModalStore from "@/store/store";
+import { useModalStore } from "@/store/store";
 
 function CloseModal() {
   const { setModal } = useModalStore();

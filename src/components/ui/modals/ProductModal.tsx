@@ -4,7 +4,7 @@ import CloseModal from "./CloseModal";
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import useModalStore from "@/store/store";
+import { useModalStore } from "@/store/store";
 import { addNewCategory, addNewProduct } from "@/lib/action";
 import Button from "../Forms/Button";
 import CategoryOptions from "../Forms/CategoryOptions";
@@ -42,8 +42,8 @@ function ProductModal({ categories }: any) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
-      className=" p-4 lg:ml-64  lg:pt-5 bg-black bg-opacity-5 fixed  text-gray-600  top-0 bottom-0 left-0 right-0 z-10 flex items-center justify-center"
+      transition={{ duration: 0.1 }}
+      className=" p-4 z-50 lg:pl-64  lg:pt-5 bg-black bg-opacity-5 fixed  text-gray-600  top-0 bottom-0 left-0 right-0 flex items-center justify-center"
     >
       <form
         ref={form}
@@ -51,7 +51,7 @@ function ProductModal({ categories }: any) {
         className="bg-white z-10 py-5 px-7  rounded-md shadow-lg flex flex-col gap-5"
       >
         <div className="flex justify-between gap-10 items-center">
-          <h1 className="text-sm font-semibold">New Product</h1>
+          <h1 className="text-xs font-semibold">New Product</h1>
           <CloseModal />
         </div>
         <div className="  flex gap-2 items-end justify-start">
@@ -67,7 +67,7 @@ function ProductModal({ categories }: any) {
               />
             ) : null}
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 w-full">
             <h1 className="text-xs text-blue-500 font-semibold">Image URL</h1>
             <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
               <input
@@ -76,101 +76,100 @@ function ProductModal({ categories }: any) {
                 name="image"
                 type="text"
                 placeholder="Enter product image url"
-                className="text-sm bg-transparent outline-none"
+                className="text-xs bg-transparent outline-none w-full"
               />
             </div>
           </div>
         </div>
         {state?.errors?.name.map((e: string) => (
-          <span className="text-red-600 text-sm" key={e}>
+          <span className="text-red-600 text-xs" key={e}>
             {e}
           </span>
         )) ?? null}
-        <div className="flex flex-col gap-5">
-          <div className="grid grid-cols-2 gap-5">
-            <h2 className="text-sm my-auto">Product Name</h2>
+        <div className="grid grid-cols-2 gap-2 text-xs">
+          <div className="flex flex-col gap-2">
+            <h2 className="text-xs my-auto">Product Name</h2>
             <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
               <input
                 name="product_name"
                 type="text"
-                className="text-sm bg-transparent outline-none"
+                className="text-xs bg-transparent outline-none"
                 placeholder="Enter product name"
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-5">
-            <h2 className="text-sm my-auto">Description</h2>
-            <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
-              <textarea
-                id="w3review"
-                name="description"
-                className="text-sm bg-transparent outline-none"
-                rows={4}
-                cols={50}
-                placeholder="Enter product description"
-              ></textarea>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-5">
-            <h2 className="text-sm my-auto">Product Code</h2>
+
+          <div className="flex flex-col gap-2">
+            <h2 className="text-xs my-auto">Product Code</h2>
             <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
               <input
                 name="code"
                 type="number"
-                placeholder="Enter product code"
-                className="text-sm bg-transparent outline-none"
+                placeholder="e.g 10101"
+                className="text-xs bg-transparent outline-none w-full"
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-5">
-            <h2 className="text-sm my-auto">Buying Price</h2>
+          <div className="flex flex-col gap-2">
+            <h2 className="text-xs my-auto">Buying Price</h2>
             <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
               <input
                 name="price"
                 type="number"
                 placeholder="Enter product price"
-                className="text-sm bg-transparent outline-none"
+                className="text-xs bg-transparent outline-none w-full"
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-5">
-            <h2 className="text-sm my-auto">Brand</h2>
+          <div className="flex flex-col gap-2">
+            <h2 className="text-xs my-auto">Manufacturer</h2>
+            <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
+              <input
+                name="manufacturer"
+                type="text"
+                placeholder="Manufacturer"
+                className="text-xs bg-transparent outline-none"
+              />
+            </div>
+          </div>
+          <div className="flex flex-col gap-2">
+            <h2 className="text-xs my-auto">Generic Name</h2>
             <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
               <input
                 name="brand"
                 type="text"
-                placeholder="Enter product brand"
-                className="text-sm bg-transparent outline-none"
+                placeholder="Generic Name"
+                className="text-xs bg-transparent outline-none"
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-5">
-            <h2 className="text-sm my-auto">Quantity</h2>
+          <div className="flex flex-col gap-2">
+            <h2 className="text-xs my-auto">Quantity</h2>
             <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
               <input
                 name="quantity"
                 type="number"
-                placeholder="Enter product quantity"
-                className="text-sm bg-transparent outline-none"
+                placeholder="Product quantity"
+                className="text-xs bg-transparent outline-none w-full"
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-5">
-            <h2 className="text-sm my-auto">Product Type</h2>
+          <div className="flex flex-col gap-2">
+            <h2 className="text-xs my-auto">Product Type</h2>
             <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
               <input
                 name="type"
                 type="text"
-                placeholder="Enter product type"
-                className="text-sm bg-transparent outline-none"
+                placeholder="Product type"
+                className="text-xs bg-transparent outline-none w-full"
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-5">
-            <h2 className="text-sm my-auto">Category</h2>
+          <div className="flex flex-col gap-2">
+            <h2 className="text-xs my-auto">Category</h2>
             <select
               name="category"
-              className="border border-gray-200 text-slate-400 text-sm p-2 rounded-md"
+              className="border border-gray-200 text-slate-400 text-xs p-2 rounded-md w-full"
             >
               <option
                 value="Java"
@@ -188,10 +187,23 @@ function ProductModal({ categories }: any) {
               ))}
             </select>
           </div>
+          <div className="flex flex-col gap-2 col-span-2">
+            <h2 className="text-xs my-auto">Description</h2>
+            <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
+              <textarea
+                id="w3review"
+                name="description"
+                className="text-xs bg-transparent outline-none w-full"
+                rows={4}
+                cols={50}
+                placeholder="Lorem epsum"
+              ></textarea>
+            </div>
+          </div>
         </div>
         <div className="flex justify-between">
-          <div></div>
           <div className="flex gap-2">
+            <Button color="bg-teal-500" name="Add Product" />
             <span
               onClick={() =>
                 setModal({
@@ -199,12 +211,12 @@ function ProductModal({ categories }: any) {
                   shown: null,
                 })
               }
-              className="cursor-pointer border border-gray-200 p-2 rounded-md text-sm"
+              className="cursor-pointer border border-gray-200 p-2 rounded-md text-xs"
             >
               Discard
             </span>
-            <Button color="bg-blue-500" name="Add Product" />
           </div>
+          <div></div>
         </div>
       </form>
     </motion.div>

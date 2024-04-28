@@ -4,7 +4,7 @@ import CloseModal from "./CloseModal";
 
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import useModalStore from "@/store/store";
+import { useModalStore } from "@/store/store";
 import { addNewCategory } from "@/lib/action";
 import Button from "../Forms/Button";
 import toast from "react-hot-toast";

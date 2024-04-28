@@ -1,12 +1,23 @@
 import GithubIcon from "@/components/icons/GithubIcon";
 
-function BasicCard() {
+function BasicCard({
+  title,
+  count,
+  percent,
+}: {
+  title: string;
+  count: string;
+  percent: string;
+}) {
   return (
-    <div className="flex items-center bg-white p-5 gap-4 rounded-md">
-      <GithubIcon />
-      <div className="flex flex-col gap-2 items-end text-sm">
-        <span>146 Sales</span>
-        <span className="text-xs">Out of 500</span>
+    <div className="border bg-white shadow-sm  rounded-md p-4">
+      <div className="flex flex-col gap-3">
+        <h1 className="text-sm font-medium text-gray-700">{title}</h1>
+        <p>{count}</p>
+        <div className="text-xs">
+          <span className="text-green-500">{percent}</span>
+          <span className="text-slate-500"> vs. last week</span>
+        </div>
       </div>
     </div>
   );

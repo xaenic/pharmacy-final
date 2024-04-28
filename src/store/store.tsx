@@ -9,7 +9,7 @@ interface ModalState {
   setModal: any;
 }
 
-const useModalStore = create<ModalState>((set) => ({
+export const useModalStore = create<ModalState>((set) => ({
   active: false,
   shown: null,
   id: null,
@@ -18,4 +18,24 @@ const useModalStore = create<ModalState>((set) => ({
     set((state) => ({ ...state, ...newValues })),
 }));
 
-export default useModalStore;
+export interface SidebarState {
+  active: boolean;
+  setSidebar: any;
+}
+
+export const useSidebar = create<SidebarState>((set) => ({
+  active: false,
+  setSidebar: (newValues: Partial<SidebarState>) =>
+    set((state) => ({ ...state, ...newValues })),
+}));
+
+export interface SearchState {
+  term: string;
+  setTerm: any;
+}
+
+export const useSearch = create<SearchState>((set) => ({
+  term: "",
+  setTerm: (newValues: Partial<SearchState>) =>
+    set((state) => ({ ...state, ...newValues })),
+}));

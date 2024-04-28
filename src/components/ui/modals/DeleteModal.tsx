@@ -4,7 +4,7 @@ import CloseModal from "./CloseModal";
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import useModalStore from "@/store/store";
+import { useModalStore } from "@/store/store";
 import {
   addNewCategory,
   addNewProduct,
@@ -16,7 +16,7 @@ import CategoryOptions from "../Forms/CategoryOptions";
 import { getProductById } from "@/lib/db/db";
 import Image from "next/image";
 import toast from "react-hot-toast";
-import { FadeLoader } from "react-spinners";
+import { ClipLoader, FadeLoader } from "react-spinners";
 
 import { motion } from "framer-motion";
 function DeleteModal({ id }: { id: string | null }) {
@@ -69,10 +69,10 @@ function DeleteModal({ id }: { id: string | null }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
-      className=" p-4 lg:ml-64  lg:pt-5 bg-black bg-opacity-5 fixed  text-gray-600  top-0 bottom-0 left-0 right-0 z-10 flex items-center justify-center"
+      className=" z-50 p-4 lg:pl-64  lg:pt-5 bg-black bg-opacity-5 fixed  text-gray-600  top-0 bottom-0 left-0 right-0 flex items-center justify-center"
     >
       {loading ? (
-        <FadeLoader color="#0EA5E9" width={3} />
+        <ClipLoader color="#0EA5E9" size={14} />
       ) : (
         <motion.form
           ref={form}
@@ -114,6 +114,7 @@ function DeleteModal({ id }: { id: string | null }) {
           <div className="flex justify-between">
             <div></div>
             <div className="flex gap-2">
+              <Button color="bg-rose-700" name="Delete" />
               <span
                 onClick={() =>
                   setModal({
@@ -125,7 +126,6 @@ function DeleteModal({ id }: { id: string | null }) {
               >
                 Discard
               </span>
-              <Button color="bg-red-500" name="Delete" />
             </div>
           </div>
         </motion.form>

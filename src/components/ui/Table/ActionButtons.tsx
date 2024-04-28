@@ -2,7 +2,9 @@
 
 import DeleteIcon from "@/components/icons/DeleteIcon";
 import EditIcon from "@/components/icons/EditIcon";
-import useModalStore from "@/store/store";
+import ViewIcon from "@/components/icons/ViewIcon";
+import { useModalStore } from "@/store/store";
+import Link from "next/link";
 
 function ActionButtons({ id, name }: { id: string; name: string }) {
   const { setModal } = useModalStore();
@@ -17,7 +19,7 @@ function ActionButtons({ id, name }: { id: string; name: string }) {
           })
         }
       >
-        <EditIcon className="cursor-pointer w-5 h-5 text-blue-500" />
+        <EditIcon className="cursor-pointer w-4 h-4 " />
       </div>
       <div
         onClick={() =>
@@ -29,8 +31,11 @@ function ActionButtons({ id, name }: { id: string; name: string }) {
           })
         }
       >
-        <DeleteIcon className="cursor-pointer w-5 h-5 text-red-500" />
+        <DeleteIcon className="cursor-pointer w-4 h-4 " />
       </div>
+      <Link href={`/admin/view/${id}`}>
+        <ViewIcon className="cursor-pointer w-4 h-4 " />
+      </Link>
     </div>
   );
 }

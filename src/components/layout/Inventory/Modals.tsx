@@ -4,7 +4,7 @@ import CategoryModal from "@/components/ui/modals/CategoryModal";
 import DeleteModal from "@/components/ui/modals/DeleteModal";
 import EditModal from "@/components/ui/modals/EditModal";
 import ProductModal from "@/components/ui/modals/ProductModal";
-import useModalStore from "@/store/store";
+import { useModalStore } from "@/store/store";
 import { useEffect } from "react";
 
 function Modals({ categories }: any) {
