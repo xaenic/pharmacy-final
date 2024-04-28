@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pharmacy Management System with Next.js
+
+Welcome to the Pharmacy Management System built with Next.js! This project provides both an admin dashboard for managing pharmacy operations and a customer view for convenient browsing and purchasing of pharmacy products.
+
+## Features
+
+- **Admin Dashboard:**
+  - Manage inventory: Add, update, or delete products.
+  - View sales reports: Track sales performance and generate reports.
+  - Manage orders: Process customer orders and track their status.
+  - User management: Add, update, or remove admin users.
+
+- **Customer View:**
+  - Browse products: Customers can view available products.
+  - Search functionality: Search for specific products based on name, category, etc.
+  - User registration and login: Customers can create accounts and log in to manage their orders.
+
+## Tech Stack
+
+- **Frontend:**
+  - Next.js: React framework for building server-side rendered React applications.
+  - React: JavaScript library for building user interfaces.
+  - Tailwind CSS: Utility-first CSS framework for styling.
+  - NextAuth.js: Authentication library for Next.js applications.
+
+- **Backend:**
+  - Node.js: JavaScript runtime environment.
+  - Express.js: Web application framework for Node.js.
+  - MongoDB: NoSQL database for storing product, user, and order data.
 
 ## Getting Started
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
