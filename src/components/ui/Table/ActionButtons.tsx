@@ -6,7 +6,15 @@ import ViewIcon from "@/components/icons/ViewIcon";
 import { useModalStore } from "@/store/store";
 import Link from "next/link";
 
-function ActionButtons({ id, name }: { id: string; name: string }) {
+function ActionButtons({
+  id,
+  name,
+  reference = "Product",
+}: {
+  id: string;
+  name: string;
+  reference: string;
+}) {
   const { setModal } = useModalStore();
   return (
     <div className="flex items-center">
@@ -14,7 +22,7 @@ function ActionButtons({ id, name }: { id: string; name: string }) {
         onClick={() =>
           setModal({
             active: true,
-            shown: "Edit",
+            shown: reference == "Product" ? "Edit" : "EditCategory",
             id: id,
           })
         }
@@ -25,7 +33,7 @@ function ActionButtons({ id, name }: { id: string; name: string }) {
         onClick={() =>
           setModal({
             active: true,
-            shown: "Delete",
+            shown: reference == "Product" ? "Edit" : "DeleteCategory",
             id: id,
             name: name,
           })

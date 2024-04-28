@@ -19,12 +19,28 @@ export const addCategory = async (category_name: string, capacity: string) => {
     await sql`INSERT INTO category (category_name,capacity) VALUES(${category_name}, ${capacity})`;
   return ok;
 };
-
+export const updateCategory = async (
+  category_name: string,
+  capacity: string,
+  id: string
+) => {
+  const ok =
+    await sql`UPDATE category SET category_name = ${category_name}, capacity=${capacity} WHERE category_id = ${id}`;
+  return ok;
+};
 export const getCategories = async () => {
-  const ok = await sql`SELECT * FROM category`;
+  const ok = await sql`SELECT * FROM category ORDER BY category_id`;
   return ok;
 };
 
+export const getCategoryById = async (id: string): Promise<Product> => {
+  const ok = await sql`SELECT * FROM category  WHERE category_id = ${id}`;
+  return ok.rows[0] as any;
+};
+export const deleteCategory = async (id: string) => {
+  const ok = await sql`DELETE FROM category WHERE category_id = ${id}`;
+  return ok;
+};
 //products
 
 export const addProduct = async (

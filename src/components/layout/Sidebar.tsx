@@ -30,7 +30,7 @@ const Sidebar = () => {
             setSidebar({
               active: false,
             });
-            setCollapse(true);
+            setCollapse(false);
           }}
           className="lg:hidden bg-white flex mb-4 items-center rounded-md cursor-pointer w-full justify-end"
         >
@@ -66,11 +66,13 @@ const Sidebar = () => {
           <h1 className="text-center font-bold">Pharmacy</h1>
         </section>
         <Link
-          onClick={() =>
+          onClick={() => {
             setSidebar({
               active: false,
-            })
-          }
+            });
+
+            setCollapse(false);
+          }}
           href="/admin"
           id="widget_2"
           className="mt-5 flex flex-col gap-5"
@@ -154,7 +156,9 @@ const Sidebar = () => {
                 })
               }
               href="/admin/inventory/categories"
-              className="flex items-center gap-2 hover:text-blue-500"
+              className={`flex items-center gap-2 hover:text-blue-500 ${
+                path.toString().includes("categories") ? "text-blue-600" : ""
+              }`}
             >
               <CategoryIcon className="w-4 h-4" />
               <span>Categories</span>

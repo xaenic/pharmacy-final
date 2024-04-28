@@ -76,8 +76,8 @@ function CategoryModal() {
             <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
               <input
                 name="capacity"
-                type="text"
-                className="bg-transparent outline-none"
+                type="number"
+                className="bg-transparent outline-none w-full"
               />
             </div>
           </div>

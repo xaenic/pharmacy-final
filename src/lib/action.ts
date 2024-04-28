@@ -3,7 +3,14 @@ import { auth, signIn } from "@/auth";
 import { z } from "zod";
 
 import { AuthError, Session } from "next-auth";
-import { addCategory, addProduct, deleteProduct, updateProduct } from "./db/db";
+import {
+  addCategory,
+  addProduct,
+  deleteCategory,
+  deleteProduct,
+  updateCategory,
+  updateProduct,
+} from "./db/db";
 
 export async function authenticate(
   prevState: string | undefined,
@@ -54,7 +61,48 @@ export async function addNewCategory(prevState: any, formData: FormData) {
     },
   };
 }
+export async function updateNewCategory(prevState: any, formData: FormData) {
+  const category_name = formData.get("category_name") as string;
+  const capacity = formData.get("capacity") as string;
+  const id = formData.get("id") as string;
+  if (category_name.length <= 3) {
+    return {
+      message: "fail",
+      errors: {
+        name: ["Category Name is too short."],
+      },
+    };
+  }
+  if (parseInt(capacity) <= 0) {
+    return {
+      message: "fail",
+      errors: {
+        name: ["Invalid Capacity"],
+      },
+    };
+  }
 
+  const ok = await updateCategory(category_name, capacity, id);
+
+  return {
+    message: "Success",
+    errors: {
+      name: [],
+    },
+  };
+}
+
+export async function deleteNewCategory(prevState: any, formData: FormData) {
+  const id = formData.get("category_id") as string;
+
+  const ok = await deleteCategory(id);
+  return {
+    message: "Success",
+    errors: {
+      name: [],
+    },
+  };
+}
 export async function addNewProduct(prevState: any, formData: FormData) {
   const product_name = formData.get("product_name") as string;
   const image = formData.get("image") as string;
