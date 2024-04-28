@@ -100,7 +100,9 @@ const Sidebar = () => {
           <div
             onClick={() => setCollapse((prev: boolean) => !prev)}
             className={`${
-              path.toString().includes("/admin/inventory") || collapse
+              path.toString().includes("/admin/inventory") ||
+              collapse ||
+              path.toString().includes("/admin/view")
                 ? "bg-blue-600 text-white"
                 : ""
             } flex gap-2 items-center hover:bg-blue-500 hover:text-white cursor-pointer text-gray-700 rounded-lg px-3 p-2`}

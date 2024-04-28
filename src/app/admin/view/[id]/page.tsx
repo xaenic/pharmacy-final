@@ -45,7 +45,7 @@ export default async function Inventory({ params }: Props) {
             </div>
             <div>
               <Link
-                href="/admin/inventory"
+                href="/admin/inventory/products"
                 className="text-xs flex items-center border p-2 px-4 gap-3 rounded-md hover:bg-gray-200 transition-colors duration-200 "
               >
                 <svg
