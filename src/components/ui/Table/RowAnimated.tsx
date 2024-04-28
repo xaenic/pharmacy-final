@@ -64,7 +64,7 @@ function RowAnimated({ e, i }: any) {
           </span>
         </td>
         <td className="border px-4 py-4 border-none text-center text-xs  text-gray-500">
-          <ActionButtons id={e.id} name={e.product_name} />
+          <ActionButtons reference="Product" id={e.id} name={e.product_name} />
         </td>
       </motion.tr>
     </>
