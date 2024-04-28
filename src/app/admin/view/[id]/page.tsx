@@ -16,12 +16,14 @@ import FolderIcon from "@/components/icons/FolderIcon";
 import AddIcon from "@/components/icons/AddIcon";
 import { Product } from "@/lib/types/Product";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 interface Props {
   params: { id: any };
 }
 export default async function Inventory({ params }: Props) {
   const { id } = params;
   const product: Product = await getProductById(id);
+  if (!product) return redirect("/admin");
   return (
     <div className="flex min-h-screen bg-white">
       <Toaster

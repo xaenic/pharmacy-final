@@ -37,16 +37,16 @@ export default async function Products() {
         <Modals categories={options.rows} />
         <Topbar title="Inventory" />
         <div className="mt-10">
-          <div className="flex justify-between items-center flex-wrap gap-2">
+          <div className="flex justify-between items-center flex-wrap gap-4">
             <div className="flex flex-col">
               <span className="text-xl font-medium">Products</span>
               <small className="text-xs text-slate-500">
-                Here is the list of products
+                Total products ({results.length})
               </small>
             </div>
             <div className="flex gap-3">
               <SearchProduct />
-              <AddButtons />
+              <AddButtons name="Product" />
             </div>
           </div>
         </div>

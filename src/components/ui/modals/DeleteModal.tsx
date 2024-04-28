@@ -72,7 +72,7 @@ function DeleteModal({ id }: { id: string | null }) {
       className=" z-50 p-4 lg:pl-64  lg:pt-5 bg-black bg-opacity-5 fixed  text-gray-600  top-0 bottom-0 left-0 right-0 flex items-center justify-center"
     >
       {loading ? (
-        <ClipLoader color="#0EA5E9" size={14} />
+        <ClipLoader color="#0EA5E9" size={24} />
       ) : (
         <motion.form
           ref={form}
