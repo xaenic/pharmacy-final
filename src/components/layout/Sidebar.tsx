@@ -18,19 +18,12 @@ const Sidebar = () => {
     path.toString().includes("/admin/inventory")
   );
   return (
-    <div
-      onClick={() => {
-        setSidebar({
-          active: false,
-        });
-      }}
-      className={`${
-        active ? "left-0" : "left-[-1000px]"
-      } z-40 fixed top-0  bottom-0 xl:left-0 w-full  duration-300 transition-all `}
-    >
+   
       <aside
         id="sidebar"
-        className={`z-50 bg-white shadow-sm border   pb-36   w-56 xl:w-48  p-5 rounded-xl xl:mt-5 xl:ml-3 h-screen xl:h-[95%] xl:m-4     flex-col justify-between `}
+        className={`${
+        active ? "left-0" : "left-[-1000px]"
+      } z-40 fixed top-0  bottom-0 xl:left-0 w-full  duration-300 transition-all  bg-white shadow-sm border   pb-36   w-56 xl:w-48  p-5 rounded-xl xl:mt-5 xl:ml-3 h-screen xl:h-[95%] xl:m-4     flex-col justify-between `}
       >
         <div className="h-full text-gray-700 text-xs">
           <div
@@ -193,7 +186,7 @@ const Sidebar = () => {
           <LogoutButton />
         </div>
       </aside>
-    </div>
+  
   );
 };
 
