@@ -33,7 +33,7 @@ function ActionButtons({
         onClick={() =>
           setModal({
             active: true,
-            shown: reference == "Product" ? "Edit" : "DeleteCategory",
+            shown: reference == "Product" ? "Delete" : "DeleteCategory",
             id: id,
             name: name,
           })
