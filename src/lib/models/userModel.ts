@@ -3,9 +3,9 @@ export interface IUser {
   firstname: string;
   lastname: string;
   phone_number: string;
-  age: string;
+  age: number;
   password: string;
-  date_created: Date;
+  date_created: Date | null;
   email: string;
   gender: string;
   role: string;

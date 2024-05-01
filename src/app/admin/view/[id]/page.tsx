@@ -17,6 +17,7 @@ import AddIcon from "@/components/icons/AddIcon";
 import { Product } from "@/lib/types/Product";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 interface Props {
   params: { id: any };
 }
@@ -73,7 +74,20 @@ export default async function Inventory({ params }: Props) {
         </div>
         <div className="mt-10 border bg-white p-5">
           <h1>Medicine Information</h1>
-          <div className="flex gap-14 flex-wrap items-start p-5 pl-0">
+          <div className="grid grid-cols-3 xl:grid-cols-4 gap-4 p-5 pl-0">
+            <div className="text-xs flex flex-col">
+              <span className="text-slate-400 ">Image</span>
+              <div className="w-24 h-24  overflow-hidden rounded-lg">
+                <Image
+                  width={32}
+                  height={32}
+                  src={product.image}
+                  alt="Avatar"
+                  unoptimized={true}
+                  className="rounded-md h-full w-full object-cover"
+                />
+              </div>
+            </div>
             <div className="text-xs flex flex-col">
               <span className="text-slate-400 ">Name</span>
               <span className="text-gray-600">{product.product_name}</span>
@@ -103,7 +117,7 @@ export default async function Inventory({ params }: Props) {
             <h1 className="text-slate-400">Description</h1>
             <p>{product.description}</p>
           </div>
-          <div className="mt-5">
+          <div className="mt-5 border-t pt-5">
             <h1>Stock & Price</h1>
             <div className="flex gap-14 flex-wrap items-start p-5 pl-0">
               <div className="text-xs flex flex-col">

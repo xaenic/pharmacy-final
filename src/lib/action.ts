@@ -1,16 +1,18 @@
 "use server";
 import { auth, signIn } from "@/auth";
 import { z } from "zod";
-
+import bcrypt from "bcrypt";
 import { AuthError, Session } from "next-auth";
 import {
   addCategory,
   addProduct,
   deleteCategory,
   deleteProduct,
+  saveUser,
   updateCategory,
   updateProduct,
 } from "./db/db";
+import { IUser } from "./models/userModel";
 
 export async function authenticate(
   prevState: string | undefined,
@@ -32,6 +34,48 @@ export async function authenticate(
   }
 }
 
+export async function register(prevState: any, formData: FormData) {
+  const user: IUser = {
+    firstname: formData.get("firstname") as string,
+    lastname: formData.get("lastname") as string,
+    email: formData.get("email") as string,
+    gender: formData.get("gender") as string,
+    phone_number: formData.get("phone_number") as string,
+    role: formData.get("role") as string,
+    password: await bcrypt.hash(formData.get("password") as string, 10),
+    age: 25, // Assuming you want to initialize age as an empty string
+    date_created: null, // Assuming date_created can be null or undefined
+  };
+
+  if (
+    user.firstname == "" ||
+    user.lastname == "" ||
+    user.email == "" ||
+    user.gender == "" ||
+    user.phone_number == "" ||
+    user.role == "" ||
+    user.password == ""
+  )
+    return "All fields are required";
+  const resp = await saveUser(user);
+
+  if (resp?.includes("Success")) {
+    try {
+      await signIn("credentials", formData);
+    } catch (error) {
+      if (error instanceof AuthError) {
+        switch (error.type) {
+          case "CredentialsSignin":
+            return "Invalid credentials.";
+          default:
+            return "Something went wrong.";
+        }
+      }
+      throw error;
+    }
+  }
+  return resp;
+}
 export async function addNewCategory(prevState: any, formData: FormData) {
   const category_name = formData.get("category_name") as string;
   const capacity = formData.get("capacity") as string;

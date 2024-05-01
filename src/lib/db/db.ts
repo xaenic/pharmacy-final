@@ -13,6 +13,25 @@ export const getUser = async (userEmail: string): Promise<IUser | null> => {
   }
 };
 
+export const saveUser = async (User: IUser) => {
+  const exist = await getUser(User.email);
+
+  if (exist) {
+    return "Email already exists";
+  }
+
+  try {
+    const { rows } =
+      await sql`INSERT INTO users (firstname,lastname,email, gender, phone_number, role,password,age) VALUES(${User.firstname}, ${User.lastname},${User.email}, ${User.gender}, ${User.phone_number}, ${User.role}, ${User.password} ,${User.age})`;
+    return "Successfully Registered";
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+
+  return;
+};
+
 // categories
 export const addCategory = async (category_name: string, capacity: string) => {
   const ok =

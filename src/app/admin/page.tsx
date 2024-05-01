@@ -27,7 +27,7 @@ export default async function Admin(): Promise<JSX.Element> {
           </h1>
           <p className="text-xs text-slate-500 font-medium">
             {" "}
-            Welcome {session?.user?.firstname} to admin dashboard
+            Welcome {session?.user?.role} to admin dashboard
           </p>
           <div className="grid grid-cols-1 gap-4 mt-4 md:grid-cols-2">
             <BasicCard title="Today's Sales" count="$10,945" percent="4.63%" />

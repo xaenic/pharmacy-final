@@ -44,15 +44,15 @@ export const { auth, signIn, signOut } = NextAuth({
   session: {
     strategy: "jwt",
   },
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) token.user = user;
-      return token;
-    },
-    async session({ session, token, user }) {
-      session = token.user as any;
-      // console.log(session);
-      return session;
-    },
-  },
+  // callbacks: {
+  //   async jwt({ token, user }) {
+  //     if (user) token.user = user;
+  //     return token;
+  //   },
+  //   async session({ session, token, user }) {
+  //     session = token.user as any;
+  //     // console.log(session);
+  //     return session;
+  //   },
+  // },
 });
