@@ -20,7 +20,7 @@ const LoginPage = () => {
           <div>
             <span className="text-gray-800 text-sm">
               Don{`'`}t have an account?{" "}
-              <Link href="/register" className="text-blue-500 font-bold">
+              <Link href="/register" className="text-sky-500 font-medium">
                 Sign Up
               </Link>
             </span>

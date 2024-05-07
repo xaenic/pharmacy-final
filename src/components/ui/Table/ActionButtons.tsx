@@ -41,9 +41,12 @@ function ActionButtons({
       >
         <DeleteIcon className="cursor-pointer w-4 h-4 " />
       </div>
-      <Link href={`/admin/view/${id}`}>
-        <ViewIcon className="cursor-pointer w-4 h-4 " />
-      </Link>
+
+      {reference == "Product" ? (
+        <Link href={`/admin/view/${id}`}>
+          <ViewIcon className="cursor-pointer w-4 h-4 " />
+        </Link>
+      ) : null}
     </div>
   );
 }

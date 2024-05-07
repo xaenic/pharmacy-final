@@ -27,7 +27,7 @@ const LoginPage = () => {
             <div>
               <span className="text-gray-800 text-sm">
                 Already Have an Account?{" "}
-                <Link href="/login" className="text-blue-500 font-bold">
+                <Link href="/login" className="text-sky-600 font-medium">
                   Sign In
                 </Link>
               </span>

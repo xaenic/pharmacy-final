@@ -26,6 +26,16 @@ function RowAnimated({ e, i }: any) {
             className="rounded-md w-10 h-10 object-cover"
           />
         </td> */}
+        <td className=" font-medium border px-4 py-4 border-none text-center text-xs  text-gray-500 flex justify-center">
+          <Image
+            width={40}
+            height={40}
+            alt="Product Image"
+            className="h-6 w-6 rounded-full object-cover bg-white"
+            unoptimized={true}
+            src={e.image}
+          />
+        </td>
         <td className=" font-medium border px-4 py-4 border-none text-center text-xs  text-gray-500">
           {e.product_name}
         </td>

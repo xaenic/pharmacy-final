@@ -106,7 +106,7 @@ const RegisterForm = () => {
             </div>
           </div>
           <div className="col-span-2 ">
-            <Button color="bg-gray-800 text-center" name="Register" />
+            <Button color="bg-sky-600 text-center py-3" name="Register" />
           </div>
         </div>
       </form>

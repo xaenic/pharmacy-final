@@ -60,6 +60,9 @@ function Table({ results }: { results: Product[] }) {
               <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center ">
                 NO
               </th>
+              <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
+                Image
+              </th>
 
               <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
                 Product Name

@@ -51,10 +51,10 @@ function CategoryModal() {
           <h1 className="text-sm font-semibold">New Category</h1>
           <CloseModal />
         </div>
-        <div className="  flex gap-2 items-center justify-center">
+        {/* <div className="  flex gap-2 items-center justify-center">
           <div className="w-24 h-24 border border-dashed border-blue-500 rounded-lg"></div>
           <h1 className="text-xs text-blue-500 font-semibold">Browse Image</h1>
-        </div>
+        </div> */}
         {state?.errors?.name.map((e: string) => (
           <span className="text-red-600 text-sm" key={e}>
             {e}

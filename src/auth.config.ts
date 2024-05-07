@@ -32,7 +32,7 @@ export const authConfig = {
         if (!isAdmin && isOnDashboard)
           return Response.redirect(new URL("/", nextUrl));
         if (isOnAuth) return Response.redirect(new URL("/", nextUrl));
-      } else if (!isOnLandingPage) {
+      } else if (!isOnLandingPage && !isOnAuth) {
         return false;
       }
 

@@ -27,3 +27,12 @@ const medicineTable = `CREATE TABLE product (
   brand VARCHAR(20) NOT NULL
 );
 `;
+const cart_items = `CREATE TABLE UserCart (
+    user_id INT,
+    product_id INT,
+    quantity INT,
+    PRIMARY KEY (user_id, product_id),
+    FOREIGN KEY (user_id) REFERENCES users(staff_id),
+    FOREIGN KEY (product_id) REFERENCES product(id)
+);
+`;
