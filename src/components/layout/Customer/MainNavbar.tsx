@@ -7,7 +7,8 @@ import TabIcon from "@/components/icons/TabIcon";
 import SearchIcon from "@/components/icons/SearchIcon";
 import CartIcon from "@/components/icons/CartIcon";
 import { signOut } from "@/auth";
-import { useModalStore } from "@/store/store";
+import { useModalStore, useSidebar } from "@/store/store";
+import MobileSideBar from "./MobileSideBar";
 
 function MainNavbar({
   session,
@@ -17,7 +18,7 @@ function MainNavbar({
   total: number | null;
 }) {
   const { setModal } = useModalStore();
-
+  const { setSidebar } = useSidebar();
   return (
     <>
       <div className="w-full bg-slate-100 items-center text-gray-700 flex justify-between p-2">
@@ -50,7 +51,7 @@ function MainNavbar({
           )}
         </div>
       </div>
-      <nav className="bg-white flex items-center justify-between gap-14 p-4 py-2 lg:py-4 shad lg:px-20">
+      <nav className="bg-white flex items-center justify-between gap-14 p-4 py-5 lg:py-4 shad lg:px-20">
         <Image
           width={20}
           height={20}
@@ -70,13 +71,8 @@ function MainNavbar({
             </Link>
           </li>
           <li className="flex items-center gap-2">
-            <Link href="/" className="">
-              About
-            </Link>
-          </li>
-          <li className="flex items-center gap-2">
-            <Link href="/" className="">
-              Contact Us
+            <Link href="/transactions" className="">
+              Transactions
             </Link>
           </li>
         </ul>
@@ -112,7 +108,53 @@ function MainNavbar({
             </div>
           )}
         </div>
+        <div className="flex items-center gap-4 lg:hidden">
+          {!session ? (
+            <Link href="/login" className="">
+              <CartIcon
+                total={null}
+                className="w-6 h-6 text-gray-700 cursor-pointer hover:text-gray-500 duration-200 transition-colors"
+              />
+            </Link>
+          ) : (
+            <div
+              onClick={() =>
+                setModal({
+                  active: true,
+                  shown: "Cart",
+                })
+              }
+            >
+              <CartIcon
+                total={total}
+                className="w-6 h-6 text-gray-700 cursor-pointer hover:text-gray-500 duration-200 transition-colors"
+              />
+            </div>
+          )}
+          <svg
+            onClick={() =>
+              setSidebar({
+                active: true,
+              })
+            }
+            xmlns="http://www.w3.org/2000/svg"
+            width="1em"
+            height="1em"
+            viewBox="0 0 24 24"
+            className="cursor-pointer"
+          >
+            <path
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2.5}
+              d="M3 6h18M3 12h18M3 18h18"
+            ></path>
+          </svg>
+        </div>
       </nav>
+      <MobileSideBar />
     </>
   );
 }

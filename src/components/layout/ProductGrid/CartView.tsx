@@ -18,7 +18,7 @@ function CartView({
   const router = useRouter();
   return (
     <>
-      <div className="mx-20 w-full grid grid-cols-3 gap-3">
+      <div className="lg:mx-20 w-full grid grid-cols-1 lg:grid-cols-3 gap-3">
         <div
           id="scroll"
           className={`bg-white rounded-lg mt-5 col-span-2  overflow-x-auto w-full`}
@@ -108,7 +108,7 @@ function CartView({
             </tbody>
           </table>
         </div>
-        <div className="flex flex-col items-center p-10 border-l gap-3 pt-0">
+        <div className="flex flex-col w-full p-10  gap-3 pt-0">
           <h1 className="text-2xl font-medium ">Cart Summary</h1>
           <div className="flex justify-between items-center w-full mt-6">
             <h2 className="font-medium text-xl">Subtotal:</h2>

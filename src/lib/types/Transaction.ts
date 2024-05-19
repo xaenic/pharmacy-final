@@ -1,12 +1,15 @@
+import { IUser } from "../models/userModel";
 import { CartItem, Product } from "./CartItems";
 
-export interface Transaction {
+export interface Transaction extends IUser {
+  id: number;
   user_id: number;
-  name: string;
+  status: string;
+  items: Transaction_Item[];
   address: string;
   total_items: number;
   total: number;
-  date_created: Date;
+  date_created: string;
 }
 
 export interface Transaction_Item extends Product {
@@ -22,6 +25,6 @@ export interface BillingDetail {
   city: string;
   barangay: string;
   zipcode: number;
-  date_created: Date;
+  date_created: string;
   address: string;
 }

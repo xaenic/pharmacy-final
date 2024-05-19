@@ -56,12 +56,12 @@ function CheckoutView({
     if (isSubmitSuccessful) {
       router.push("/thank-you");
     }
-  }, [isSubmitSuccessful]);
+  }, [isSubmitSuccessful, router]);
   return (
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="grid grid-cols-3 gap-6 w-full"
+        className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full"
       >
         <div className="col-span-2">
           <h1 className="text-2xl font-bold mb-10">Billing Details</h1>

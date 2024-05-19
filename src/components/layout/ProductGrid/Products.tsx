@@ -53,6 +53,15 @@ function Products({ products, user_id }: any) {
       ...prevLoading,
       [product_id]: true,
     }));
+
+    if (stocks == 0) {
+      toast.error("No stocks available");
+      setLoading((prevLoading) => ({
+        ...prevLoading,
+        [product_id]: false,
+      }));
+      return;
+    }
     const ok = await addToCart(stocks, user_id as number, product_id, quantity);
     if (ok) {
       router.refresh();
@@ -106,7 +115,7 @@ function Products({ products, user_id }: any) {
         }}
       />
       <div className="w-full">
-        <div className="flex justify-between">
+        <div className="flex justify-between flex-wrap gap-4">
           <Select
             placeholder="Sort By"
             size="sm"
@@ -136,7 +145,7 @@ function Products({ products, user_id }: any) {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-4 mt-4 gap-2">
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-4 gap-2">
           {items
             ? items.map((e: Product) => (
                 <div
@@ -157,19 +166,19 @@ function Products({ products, user_id }: any) {
                   <h1 className="line-clamp-1 text-sm max-w-xs">
                     {e.product_name}
                   </h1>
-                  <div className="w-full flex justify-between items-center">
+                  <div className="w-full flex justify-between flex-col items-center">
                     <h2 className="text-red-500 font-medium">₱{e.price}</h2>
                     <div className="flex items-center space-x-2">
                       <button
                         onClick={() => decrementQuantity(e.id)}
-                        className="px-2 py-1 bg-gray-200 rounded"
+                        className="px-2  bg-gray-200 rounded"
                       >
                         -
                       </button>
                       <span>{quantities[e.id] || 1}</span>
                       <button
                         onClick={() => incrementQuantity(e.id)}
-                        className="px-2 py-1 bg-gray-200 rounded"
+                        className="px-2  bg-gray-200 rounded"
                       >
                         +
                       </button>
@@ -179,7 +188,7 @@ function Products({ products, user_id }: any) {
                     <Button
                       size="sm"
                       color="primary"
-                      className="self-end bg-sky-500"
+                      className="self-center bg-sky-500 shrink-0"
                       isLoading
                     >
                       Add to Cart
@@ -199,7 +208,7 @@ function Products({ products, user_id }: any) {
                       }}
                       size="sm"
                       color="primary"
-                      className="self-end bg-sky-500"
+                      className="self-center bg-sky-500 shrink-0"
                     >
                       Add to Cart
                     </Button>

@@ -8,20 +8,20 @@ import CartModal from "@/components/ui/modals/CustomerModal/CartModal";
 import { CartItem } from "@/lib/types/CartItems";
 import CartView from "@/components/layout/ProductGrid/CartView";
 import CheckoutView from "@/components/layout/ProductGrid/CheckoutView";
-import { BillingDetail } from "@/lib/types/Transaction";
-import { getBillingDetail } from "@/lib/db/transaction";
-export default async function Transaction() {
+import { BillingDetail, Transaction } from "@/lib/types/Transaction";
+import { getBillingDetail, getUserTransactions } from "@/lib/db/transaction";
+import TransactionView from "@/components/layout/ProductGrid/TransactionView";
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+export default async function Transactions() {
   const session = (await auth()) as any;
+  const transactions: Transaction[] | null = session
+    ? await getUserTransactions(session?.user.staff_id)
+    : null;
   const items: CartItem[] | null = session
     ? await geTCartItems(session?.user.staff_id)
     : null;
-  let total = 0;
-  const billing: BillingDetail | null = await getBillingDetail(
-    session?.user?.staff_id
-  );
 
-  console.log(billing);
-  if (items) items.map((e, i) => (total += e.price * e.qty));
   return (
     <>
       <div className="min-h-screen bg-white relative">
@@ -30,24 +30,22 @@ export default async function Transaction() {
         <main className="min-h-screen flex flex-col justify-between">
           <section>
             <section className="bg-slate-200  w-full p-5 flex flex-col items-center justify-center">
-              <h1 className="text-2xl font-medium">Checkout</h1>
+              <h1 className="text-2xl font-medium">Transactions</h1>
               <div className=" mt-3 flex text-xs gap-2">
                 <Link href="/">Home</Link>
                 <span></span>
-                <span>Checkout</span>
+                <span>Transactions</span>
               </div>
             </section>
-            <section className="bg-white p-10 flex items-start gap-4 min-h-screen">
-              {items && items?.length > 0 ? (
-                <CheckoutView
-                  billing={billing}
-                  total={total}
-                  items={items}
-                  user={session?.user}
+            <section className="bg-white p-10 flex items-start justify-center gap-4 min-h-screen">
+              {transactions && transactions?.length > 0 ? (
+                <TransactionView
+                  user_id={session?.user?.staff_id}
+                  transactions={transactions}
                 />
               ) : (
                 <h1 className="w-full text-center text-xl font-semibold">
-                  Please add an item to your cart first.
+                  You do not have any transactions yet.
                 </h1>
               )}
             </section>

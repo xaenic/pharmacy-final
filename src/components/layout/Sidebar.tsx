@@ -172,14 +172,29 @@ const Sidebar = () => {
           </div>
         </span>
 
-        <section id="widget_2" className="mt-5 flex flex-col gap-5">
-          <div className="flex gap-2 items-center hover:bg-blue-500  hover:text-white  cursor-pointer text-gray-700 rounded-lg px-3 p-2">
+        <Link
+          onClick={(e) => {
+            setSidebar({
+              active: false,
+            });
+            e.stopPropagation();
+            setCollapse(false);
+          }}
+          href="/admin/transactions"
+          id="widget_2"
+          className="mt-5 flex flex-col gap-5"
+        >
+          <div
+            className={`${
+              path.toString() == "/admin/transactions" && !collapse
+                ? "bg-blue-600 text-white"
+                : ""
+            } flex gap-2 items-center hover:bg-blue-500 hover:text-white  cursor-pointer texr-gray-700 rounded-lg px-3 p-2`}
+          >
             <DragIcon />
-            <a href="./students" className="w-full">
-              Transactions
-            </a>
+            <span className="w-full">Transactions</span>
           </div>
-        </section>
+        </Link>
       </div>
       <div className="w-full flex justify-center">
         <LogoutButton />

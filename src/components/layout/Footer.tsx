@@ -3,7 +3,7 @@ import Link from "next/link";
 
 function Footer() {
   return (
-    <footer className="bg-white p-20  bottom-0 w-full">
+    <footer className="bg-white p-5 xl:p-20  bottom-0 w-full">
       <div className="flex items-start justify-between flex-wrap gap-10">
         <div>
           <Image

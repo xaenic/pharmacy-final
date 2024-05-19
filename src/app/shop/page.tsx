@@ -17,6 +17,8 @@ import ProductModal from "@/components/ui/modals/ProductModal";
 import CartModal from "@/components/ui/modals/CustomerModal/CartModal";
 import { CartItem } from "@/lib/types/CartItems";
 import { Toaster } from "react-hot-toast";
+export const fetchCache = "force-no-store";
+export const dynamic = "force-dynamic";
 export default async function Shop() {
   const session = (await auth()) as any;
   const items: CartItem[] | null = session
@@ -40,8 +42,8 @@ export default async function Shop() {
                 <span>Shop</span>
               </div>
             </section>
-            <section className="bg-white p-10 flex items-start gap-4">
-              <aside className="p-5 border rounded-sm flex flex-col gap-4 ">
+            <section className="bg-white p-5 lg:p-10 flex items-start gap-4">
+              <aside className="p-5 border rounded-sm hidden lg:flex flex-col gap-4 ">
                 <h1 className="text-lg font-medium">Product Categories</h1>
                 <ul className="text-sm text-gray-500 font-normal">
                   {categroies.map((e: any, i: number) => (

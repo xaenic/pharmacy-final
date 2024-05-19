@@ -18,7 +18,6 @@ export default async function Home() {
   const items: CartItem[] | null = session
     ? await geTCartItems(session?.user.staff_id)
     : null;
-  console.log(items?.length ?? null);
   return (
     <>
       <div className="min-h-screen bg-slate-100">
@@ -27,7 +26,7 @@ export default async function Home() {
         <main>
           <EmblaCarousel />
 
-          <section className="p-10 bg-white">
+          <section className="p-5 bg-white">
             <div className="flex items-center flex-wrap-reverse justify-center gap-28 ">
               <Image
                 src="/images/illustration_1.jpg"

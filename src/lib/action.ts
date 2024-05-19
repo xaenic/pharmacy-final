@@ -23,7 +23,9 @@ import {
   addBillingDetail,
   addItemToTransaction,
   makeTransaction,
+  updateTransaction,
 } from "./db/transaction";
+import { stat } from "fs";
 
 export async function authenticate(
   prevState: string | undefined,
@@ -55,7 +57,7 @@ export async function register(prevState: any, formData: FormData) {
     role: formData.get("role") as string,
     password: await bcrypt.hash(formData.get("password") as string, 10),
     age: 25, // Assuming you want to initialize age as an empty string
-    date_created: null, // Assuming date_created can be null or undefined
+    date_created: "", // Assuming date_created can be null or undefined
   };
 
   if (
@@ -206,7 +208,13 @@ export async function addNewProduct(prevState: any, formData: FormData) {
     },
   };
 }
-
+export async function updateStatus(
+  user_id: number,
+  transaction_id: number,
+  status: string
+) {
+  await updateTransaction(user_id, transaction_id, status);
+}
 export async function placeOrder(prevState: any, formData: any) {
   const session = (await auth()) as any;
   const user_id = session?.user.staff_id;
@@ -282,7 +290,7 @@ export async function placeOrder(prevState: any, formData: any) {
       e.description,
       e.type
     );
-    await addItemToTransaction(row[0].transaction_id, e.product_id, e.qty);
+    await addItemToTransaction(row[0].id, e.product_id, e.qty);
   });
   return {
     message: "Success",
