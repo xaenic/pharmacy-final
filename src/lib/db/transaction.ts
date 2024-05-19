@@ -56,23 +56,31 @@ export const updateTransaction = async (
     console.log(e);
   }
 };
-export const getUserTransactions = async (user_id: number) => {
+import { sql } from 'some-sql-library'; // replace with your actual import
+
+export const getUserTransactions = async (user_id: number): Promise<Transaction[] | null> => {
   try {
-    const { rows } =
-      await sql`SELECT * FROM transaction  WHERE transaction.user_id = ${user_id} ORDER BY id desc`;
-    const ok: Transaction[] = rows as Transaction[];
-    ok.map(async (e, i) => {
-      const { rows } =
-        await sql`SELECT * FROM transaction_item INNER JOIN product ON product.id = transaction_item.product_id WHERE transaction_item.transaction_id = ${e.id}`;
-      const ey = rows as Transaction_Item[];
-      ok[i].items = [...ey];
-    });
-    return ok as Transaction[];
-  } catch (e) {
-    console.log(e);
+    // Fetch transactions for the user
+    const { rows: transactionRows } = await sql`SELECT * FROM transaction WHERE transaction.user_id = ${user_id} ORDER BY id DESC`;
+    const transactions: Transaction[] = transactionRows as Transaction[];
+
+    // Fetch transaction items for each transaction
+    const transactionsWithItems = await Promise.all(transactions.map(async (transaction) => {
+      const { rows: itemRows } =
+        await sql`SELECT * FROM transaction_item 
+                  INNER JOIN product ON product.id = transaction_item.product_id 
+                  WHERE transaction_item.transaction_id = ${transaction.id}`;
+      transaction.items = itemRows as Transaction_Item[];
+      return transaction;
+    }));
+
+    return transactionsWithItems;
+  } catch (error) {
+    console.error('Error fetching user transactions:', error);
     return null;
   }
 };
+
 
 export const getAllTransactions = async () => {
   try {
