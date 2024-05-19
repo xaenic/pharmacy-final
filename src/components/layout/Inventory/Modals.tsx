@@ -11,10 +11,6 @@ import { useEffect } from "react";
 
 function Modals({ categories }: any) {
   const { active, shown, id } = useModalStore();
-
-  useEffect(() => {
-    console.log(active);
-  }, [active]);
   return (
     <>
       {active && shown == "Category" ? <CategoryModal /> : null}

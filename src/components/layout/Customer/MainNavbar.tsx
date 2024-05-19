@@ -7,6 +7,7 @@ import TabIcon from "@/components/icons/TabIcon";
 import SearchIcon from "@/components/icons/SearchIcon";
 import CartIcon from "@/components/icons/CartIcon";
 import { signOut } from "@/auth";
+import { useModalStore } from "@/store/store";
 
 function MainNavbar({
   session,
@@ -15,6 +16,8 @@ function MainNavbar({
   session: any;
   total: number | null;
 }) {
+  const { setModal } = useModalStore();
+
   return (
     <>
       <div className="w-full bg-slate-100 items-center text-gray-700 flex justify-between p-2">
@@ -62,8 +65,8 @@ function MainNavbar({
             </Link>
           </li>
           <li className="flex items-center gap-2">
-            <Link href="/" className="">
-              Medicine
+            <Link href="/shop" className="">
+              Shop
             </Link>
           </li>
           <li className="flex items-center gap-2">
@@ -94,10 +97,19 @@ function MainNavbar({
               />
             </Link>
           ) : (
-            <CartIcon
-              total={0}
-              className="w-6 h-6 text-gray-700 cursor-pointer hover:text-gray-500 duration-200 transition-colors"
-            />
+            <div
+              onClick={() =>
+                setModal({
+                  active: true,
+                  shown: "Cart",
+                })
+              }
+            >
+              <CartIcon
+                total={total}
+                className="w-6 h-6 text-gray-700 cursor-pointer hover:text-gray-500 duration-200 transition-colors"
+              />
+            </div>
           )}
         </div>
       </nav>

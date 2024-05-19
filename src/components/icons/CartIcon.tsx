@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Tooltip } from "@nextui-org/tooltip";
 function CartIcon({
   className,
   total,
