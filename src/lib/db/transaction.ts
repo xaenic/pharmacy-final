@@ -56,7 +56,6 @@ export const updateTransaction = async (
     console.log(e);
   }
 };
-import { sql } from 'some-sql-library'; // replace with your actual import
 
 export const getUserTransactions = async (user_id: number): Promise<Transaction[] | null> => {
   try {
