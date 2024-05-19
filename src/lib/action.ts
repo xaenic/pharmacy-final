@@ -13,6 +13,17 @@ import {
   updateProduct,
 } from "./db/db";
 import { IUser } from "./models/userModel";
+import { CartItem } from "./types/CartItems";
+import {
+  deleteAllCartItems,
+  deleteItemFromCart,
+  geTCartItems,
+} from "./db/cart_item";
+import {
+  addBillingDetail,
+  addItemToTransaction,
+  makeTransaction,
+} from "./db/transaction";
 
 export async function authenticate(
   prevState: string | undefined,
@@ -188,6 +199,91 @@ export async function addNewProduct(prevState: any, formData: FormData) {
     type
   );
 
+  return {
+    message: "Success",
+    errors: {
+      name: [],
+    },
+  };
+}
+
+export async function placeOrder(prevState: any, formData: any) {
+  const session = (await auth()) as any;
+  const user_id = session?.user.staff_id;
+  const {
+    firstname,
+    lastname,
+    phone_number,
+    email,
+    city,
+    barangay,
+    address,
+    zipcode,
+  } = formData;
+  console.log(address);
+  if (firstname.length == 0 || lastname.length == 0) {
+    return {
+      message: "fail",
+      errors: {
+        name: ["Enter name"],
+      },
+    };
+  }
+
+  await addBillingDetail(
+    user_id,
+    firstname,
+    lastname,
+    city,
+    barangay,
+    zipcode,
+    address
+  );
+  let total = 0;
+  const items: CartItem[] | null = await geTCartItems(user_id);
+  if (!items)
+    return {
+      message: "fail",
+      errors: {
+        name: ["error occured"],
+      },
+    };
+  items?.map((e, i) => {
+    total += e.price * e.qty;
+  });
+
+  if (items.length == 0)
+    return {
+      message: "fail",
+      errors: {
+        name: ["error occured"],
+      },
+    };
+  const row = await makeTransaction(user_id, items.length, total);
+  if (!row)
+    return {
+      message: "fail",
+      errors: {
+        name: ["error occured"],
+      },
+    };
+  await deleteAllCartItems(user_id);
+  items.map(async (e, i) => {
+    const ok = await updateProduct(
+      e.product_name,
+      e.image,
+      e.code,
+      e.price + "",
+      e.brand,
+      e.manufacturer,
+      e.quantity - e.qty + "",
+      e.category_id + "",
+      e.id + "",
+      e.description,
+      e.type
+    );
+    await addItemToTransaction(row[0].transaction_id, e.product_id, e.qty);
+  });
   return {
     message: "Success",
     errors: {

@@ -111,7 +111,7 @@ export default async function Home() {
           </section>
           <section className="bg-white p-5 xl:p-28  pb-20">
             <div className="flex justify-center items-start gap-14 xl:gap-28 flex-wrap">
-              <div className="relative">
+              <div className="relative overflow-hidden">
                 <div className="absolute right-0 text-xl h-32 w-32 rounded-full bg-red-600 bg-opacity-80 text-center flex items-center justify-center text-white font-medium">
                   Sale
                   <br />
@@ -131,7 +131,7 @@ export default async function Home() {
                   unoptimized={true}
                   width={10}
                   height={10}
-                  className="absolute w-44 h-44 right-[-50px] bottom-0"
+                  className="absolute w-32 h-32 right-[-30px] bottom-0"
                 />
               </div>
               <div className="flex flex-col gap-5">

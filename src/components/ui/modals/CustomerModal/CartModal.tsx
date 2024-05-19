@@ -165,6 +165,8 @@ function CartModal({
                   View Cart
                 </Button>
                 <Button
+                  as={Link}
+                  href="/checkout"
                   color="primary"
                   size="md"
                   className="rounded-full w-full"

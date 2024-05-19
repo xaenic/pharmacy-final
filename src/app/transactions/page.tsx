@@ -8,22 +8,11 @@ import CartModal from "@/components/ui/modals/CustomerModal/CartModal";
 import { CartItem } from "@/lib/types/CartItems";
 import CartView from "@/components/layout/ProductGrid/CartView";
 import CheckoutView from "@/components/layout/ProductGrid/CheckoutView";
-import { getBillingDetail } from "@/lib/db/transaction";
-import { BillingDetail } from "@/lib/types/Transaction";
-export default async function CheckOut() {
+export default async function Transaction() {
   const session = (await auth()) as any;
-  const billing: BillingDetail | null = await getBillingDetail(
-    session?.user?.staff_id
-  );
-
-  console.log(billing);
   const items: CartItem[] | null = session
     ? await geTCartItems(session?.user.staff_id)
     : null;
-  let total = 0;
-
-  if (items) items.map((e, i) => (total += e.price * e.qty));
-
   return (
     <>
       <div className="min-h-screen bg-white relative">
@@ -41,12 +30,7 @@ export default async function CheckOut() {
             </section>
             <section className="bg-white p-10 flex items-start gap-4 min-h-screen">
               {items && items?.length > 0 ? (
-                <CheckoutView
-                  billing={billing}
-                  items={items}
-                  user={session?.user}
-                  total={total}
-                />
+                <CheckoutView items={items} user={session?.user} />
               ) : (
                 <h1 className="w-full text-center text-xl font-semibold">
                   Please add an item to your cart first.

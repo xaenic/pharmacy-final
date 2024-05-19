@@ -2,11 +2,13 @@
 import LockIcon from "@/components/icons/LockIcon";
 import UserIcon from "@/components/icons/UserIcon";
 import { authenticate } from "@/lib/action";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import Button from "./Button";
+import { useEffect } from "react";
 
 const LoginForm = () => {
   const [error, formAction] = useFormState(authenticate, undefined, "dsa");
+
   return (
     <>
       {error ? <span className="text-red-600 text-sm"> {error}</span> : null}

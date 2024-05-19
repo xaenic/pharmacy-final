@@ -61,3 +61,13 @@ export const deleteItemFromCart = async (
   }
   return true;
 };
+
+export const deleteAllCartItems = async (user_id: number) => {
+  try {
+    const ok = await sql`DELETE FROM cart_item WHERE user_id = ${user_id}`;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+  return true;
+};

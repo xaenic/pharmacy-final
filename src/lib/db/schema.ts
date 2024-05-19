@@ -36,3 +36,22 @@ const cart_items = `CREATE TABLE UserCart (
     FOREIGN KEY (product_id) REFERENCES product(id)
 );
 `;
+
+const transaction = `CREATE TABLE transactions (
+    id SERIAL PRIMARY KEY,
+    user_id INT,
+    name varchar(254),
+    address varchar(254),
+    total_items INT,
+    total DECIMAL(10, 2),
+    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(staff_id)
+);`;
+
+const transaction_items = `CREATE TABLE transaction_items (
+    transaction_id INT,
+    product_id INT,
+    quantity INT,
+    FOREIGN KEY (transaction_id) REFERENCES transactions(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);`;
