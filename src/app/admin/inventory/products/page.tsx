@@ -16,8 +16,7 @@ import FolderIcon from "@/components/icons/FolderIcon";
 import AddIcon from "@/components/icons/AddIcon";
 import SearchProduct from "@/components/layout/Inventory/SearchProduct";
 import { Product } from "@/lib/types/Product";
-
-export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 export default async function Products() {
   const options = await getCategories();
   const results: Product[] = await getProducts();

@@ -80,6 +80,8 @@ export const addProduct = async (
   return ok;
 };
 export const deleteProduct = async (id: string) => {
+  const asd = await sql`DELETE FROM cart_item WHERE product_id = ${id}`;
+  const asa = await sql`DELETE FROM transaction_item WHERE product_id = ${id}`;
   const ok = await sql`DELETE FROM product WHERE id = ${id}`;
   return ok;
 };

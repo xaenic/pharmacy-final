@@ -17,11 +17,11 @@ import AddIcon from "@/components/icons/AddIcon";
 import SearchProduct from "@/components/layout/Inventory/SearchProduct";
 import { Product } from "@/lib/types/Product";
 import CategoryTable from "@/components/ui/Table/CategoryTable";
-
 export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 export default async function Categories() {
   const options = await getCategories();
-
+  console.log(options);
   return (
     <div className="flex min-h-screen bg-white">
       <Toaster

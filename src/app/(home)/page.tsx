@@ -12,7 +12,7 @@ import Image from "next/image";
 import { Link } from "@nextui-org/link";
 import CartModal from "@/components/ui/modals/CustomerModal/CartModal";
 import { CartItem } from "@/lib/types/CartItems";
-export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const session = (await auth()) as any;
   const items: CartItem[] | null = session

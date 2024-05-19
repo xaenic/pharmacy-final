@@ -29,7 +29,7 @@ export const addToCart = async (
   quantity: number
 ): Promise<Boolean> => {
   console.log(quantity, stocks);
-  if (stocks != -1 && quantity > stocks) return false;
+  if (stocks != -1 && quantity > stocks) return true;
   try {
     const product: CartItem | null = await getCartItem(user_id, product_id);
 
