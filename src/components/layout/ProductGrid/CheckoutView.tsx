@@ -106,7 +106,10 @@ function CheckoutView({
             </div>
             <div className="text-gray-600 text-md flex flex-col gap-3 mt-5">
               {items?.map((e, i) => (
-                <div className="flex items-center justify-between border-b pb-4">
+                <div
+                  key={e.id}
+                  className="flex items-center justify-between border-b pb-4"
+                >
                   <div className="flex gap-2">
                     <span className="line-clamp-1 max-w-xs">
                       {e.product_name}
