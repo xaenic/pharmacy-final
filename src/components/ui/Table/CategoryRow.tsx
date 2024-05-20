@@ -13,17 +13,17 @@ function CategoryRow({ e, i }: any) {
         transition={{ duration: 0.5 }}
         className="hover:bg-gray-300 transition-colors duration-200"
       >
-        <td className=" border px-4 py-4 border-none text-center text-xs  text-gray-500">
+        <td className=" border px-4 py-4 border-none text-center text-sm  text-gray-500">
           {i + 1}
         </td>
-        <td className=" font-medium border px-4 py-4 border-none text-center text-xs  text-gray-500">
+        <td className=" font-medium border px-4 py-4 border-none text-center text-sm  text-gray-500">
           {e.category_name}
         </td>
 
-        <td className=" border px-4 py-4 border-none text-center text-xs  text-gray-500">
+        <td className=" border px-4 py-4 border-none text-center text-sm  text-gray-500">
           {e.capacity}
         </td>
-        <td className="border px-4 py-4 border-none text-center text-xs  text-gray-500">
+        <td className="border px-4 py-4 border-none text-center text-sm  text-gray-500">
           <ActionButtons
             reference="Category"
             id={e.category_id}

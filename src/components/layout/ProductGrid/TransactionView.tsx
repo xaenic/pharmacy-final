@@ -72,7 +72,17 @@ function TransactionView({
               <div className="w-full border-t p-2 text-sm flex items-end flex-col ">
                 <span>Order Total: ₱{e.total}</span>
                 <div className="flex gap-3 mt-4">
-                  {e.status == "Pending" ? (
+                  {e.status == "Pending" && loading ? (
+                    <Button
+                      onClick={() => clickHandler(user_id, e.id, "Cancelled")}
+                      color="danger"
+                      className="text-white"
+                      size="sm"
+                      isLoading
+                    >
+                      Cancel
+                    </Button>
+                  ) : e.status == "Pending" ? (
                     <Button
                       onClick={() => clickHandler(user_id, e.id, "Cancelled")}
                       color="danger"
@@ -81,7 +91,7 @@ function TransactionView({
                     >
                       Cancel
                     </Button>
-                  ) : e.status == "Cancelled" ? (
+                  ) : e.status == "Cancelled" && !loading ? (
                     <Button
                       color="default"
                       className="text-white outline-none"

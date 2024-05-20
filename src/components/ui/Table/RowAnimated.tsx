@@ -13,20 +13,10 @@ function RowAnimated({ e, i }: any) {
         transition={{ duration: 0.5 }}
         className="hover:bg-gray-300 transition-colors duration-200"
       >
-        <td className=" border px-4 py-4 border-none text-center text-xs  text-gray-500">
-          {i + 1}
+        <td className=" border px-4 py-4 border-none text-center text-sm  text-sky-500">
+          #{e.code}
         </td>
-        {/* <td className=" border px-4 py-4 border-none text-center text-xs text-gray-500">
-          <Image
-            width={32}
-            height={32}
-            src={e?.image}
-            alt="Avatar"
-            unoptimized={true}
-            className="rounded-md w-10 h-10 object-cover"
-          />
-        </td> */}
-        <td className=" font-medium border px-4 py-4 border-none text-center text-xs  text-gray-500 flex justify-center">
+        <td className=" font-medium border px-4 py-4 border-none text-center text-sm  text-gray-500 flex justify-center">
           <Image
             width={40}
             height={40}
@@ -36,27 +26,27 @@ function RowAnimated({ e, i }: any) {
             src={e.image}
           />
         </td>
-        <td className=" font-medium border px-4 py-4 border-none text-center text-xs  text-gray-500">
+        <td className=" font-medium border px-4 py-4 border-none text-center text-sm  text-gray-500">
           {e.product_name}
         </td>
 
-        <td className=" border px-4 py-4 border-none text-center text-xs  text-gray-500">
+        <td className=" border px-4 py-4 border-none text-center text-sm  text-gray-500">
           ₱ {e.price}
         </td>
-        <td className=" border px-4 py-4 border-none text-center text-xs  text-gray-500">
+        <td className=" border px-4 py-4 border-none text-center text-sm  text-gray-500">
           {e.manufacturer}
         </td>
-        <td className=" border px-4 py-4 border-none text-center text-xs  text-gray-500">
+        <td className=" border px-4 py-4 border-none text-center text-sm  text-gray-500">
           {e.brand}
         </td>
-        <td className=" border px-4 py-4 border-none text-center text-xs  text-gray-500">
+        <td className=" border px-4 py-4 border-none text-center text-sm  text-gray-500">
           {e.category_name}
         </td>
 
-        <td className=" border px-4 py-4 border-none text-center text-xs  text-gray-500">
+        <td className=" border px-4 py-4 border-none text-center text-sm  text-gray-500">
           {e.quantity}
         </td>
-        <td className="border px-4 py-4 border-none text-center text-xs  text-gray-500">
+        <td className="border px-4 py-4 border-none text-center text-sm  text-gray-500">
           <span
             className={` ${
               e.quantity == 0
@@ -64,7 +54,7 @@ function RowAnimated({ e, i }: any) {
                 : e.quantity <= 50
                 ? " text-orange-500"
                 : " text-green-500"
-            }   bg-opacity-20 px-2 p-1 rounded-md text-xs font-medium`}
+            }   bg-opacity-20 px-2 p-1 rounded-md text-sm font-medium`}
           >
             {e.quantity == 0
               ? "No Stock"
@@ -73,7 +63,7 @@ function RowAnimated({ e, i }: any) {
               : "Available"}
           </span>
         </td>
-        <td className="border px-4 py-4 border-none text-center text-xs  text-gray-500">
+        <td className="border px-4 py-4 border-none text-center text-sm  text-gray-500">
           <ActionButtons reference="Product" id={e.id} name={e.product_name} />
         </td>
       </motion.tr>

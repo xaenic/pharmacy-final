@@ -56,7 +56,7 @@ function CategoryTable({ results }: { results: any }) {
         </div>
       ) : (
         <table className="w-full text-sm rounded-md text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
-          <thead className="text-xs   rounded-md  border-b border-gray-200">
+          <thead className="text-sm   rounded-md  border-b border-gray-200">
             <tr>
               <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center ">
                 NO

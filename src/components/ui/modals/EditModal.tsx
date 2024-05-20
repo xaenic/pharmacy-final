@@ -13,6 +13,7 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 import { ClipLoader, FadeLoader } from "react-spinners";
 import { motion } from "framer-motion";
+import { DatePicker } from "@nextui-org/date-picker";
 function EditModal({ id, categories }: { id: string | null; categories: any }) {
   const { setModal } = useModalStore();
   const [state, formAction] = useFormState(updateNewProduct, {
@@ -57,6 +58,7 @@ function EditModal({ id, categories }: { id: string | null; categories: any }) {
 
     // Specify dependencies: id and getProductById
   }, [id]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -129,10 +131,18 @@ function EditModal({ id, categories }: { id: string | null; categories: any }) {
 
             <div className="flex flex-col gap-2">
               <h2 className="text-xs my-auto">Product Code</h2>
-              <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
+              <div className="bg-slate-100 border border-gray-200 rounded-md px-3 p-2">
+                <input
+                  disabled
+                  type="number"
+                  defaultValue={product?.code}
+                  placeholder="Enter product code"
+                  className="text-xs bg-transparent outline-none"
+                />
                 <input
                   name="code"
                   type="number"
+                  hidden
                   defaultValue={product?.code}
                   placeholder="Enter product code"
                   className="text-xs bg-transparent outline-none"
@@ -187,7 +197,8 @@ function EditModal({ id, categories }: { id: string | null; categories: any }) {
                 />
               </div>
             </div>
-            <div className="flex flex-col gap-2">
+
+            <div className=" flex-col gap-2 hidden ">
               <h2 className="text-xs my-auto">Product Type</h2>
               <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
                 <input
@@ -215,6 +226,10 @@ function EditModal({ id, categories }: { id: string | null; categories: any }) {
                   </option>
                 ))}
               </select>
+            </div>
+            <div className="flex-col gap-2 flex">
+              <h2 className="text-xs my-auto ">Expiry Date</h2>
+              <DatePicker name="expiry" size="sm" variant="bordered" />
             </div>
             <div className="flex flex-col gap-2 col-span-2">
               <h2 className="text-xs my-auto">Description</h2>

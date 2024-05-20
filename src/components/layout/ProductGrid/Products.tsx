@@ -46,23 +46,29 @@ function Products({ products, user_id }: any) {
 
   const addToCartHandler = async (
     stocks: number,
-    product_id: number,
+    product: Product,
     quantity: number
   ) => {
     setLoading((prevLoading) => ({
       ...prevLoading,
-      [product_id]: true,
+      [product.id]: true,
     }));
-
+    if (new Date(product.expiry_date) < new Date()) {
+      toast.error("Item has already expire");
+      setLoading((prevLoading) => ({
+        ...prevLoading,
+        [product.id]: false,
+      }));
+    }
     if (stocks == 0) {
       toast.error("No stocks available");
       setLoading((prevLoading) => ({
         ...prevLoading,
-        [product_id]: false,
+        [product.id]: false,
       }));
       return;
     }
-    const ok = await addToCart(stocks, user_id as number, product_id, quantity);
+    const ok = await addToCart(stocks, user_id as number, product.id, quantity);
     if (ok) {
       router.refresh();
       setModal({
@@ -71,13 +77,13 @@ function Products({ products, user_id }: any) {
       });
       setLoading((prevLoading) => ({
         ...prevLoading,
-        [product_id]: false,
+        [product.id]: false,
       }));
     } else {
       toast.error("No stocks available");
       setLoading((prevLoading) => ({
         ...prevLoading,
-        [product_id]: false,
+        [product.id]: false,
       }));
     }
   };
@@ -163,7 +169,7 @@ function Products({ products, user_id }: any) {
                   <span className="font-medium text-gray-500 text-xs">
                     {e.category_name}
                   </span>
-                  <h1 className="line-clamp-1 text-sm max-w-xs">
+                  <h1 className="line-clamp-1 text-sm max-w-xs shrink-0">
                     {e.product_name}
                   </h1>
                   <div className="w-full flex justify-between flex-col items-center">
@@ -196,11 +202,7 @@ function Products({ products, user_id }: any) {
                   ) : (
                     <Button
                       onClick={() => {
-                        addToCartHandler(
-                          e.quantity,
-                          e.id,
-                          quantities[e.id] || 1
-                        );
+                        addToCartHandler(e.quantity, e, quantities[e.id] || 1);
                         setQuantities((prevQuantities) => ({
                           ...prevQuantities,
                           [e.id]: 1,

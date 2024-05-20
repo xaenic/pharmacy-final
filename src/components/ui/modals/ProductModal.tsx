@@ -1,7 +1,7 @@
 "use client";
 import { useFormState } from "react-dom";
 import CloseModal from "./CloseModal";
-
+import { DatePicker } from "@nextui-org/date-picker";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useModalStore } from "@/store/store";
@@ -14,6 +14,16 @@ import { motion } from "framer-motion";
 function ProductModal({ categories }: any) {
   const { setModal } = useModalStore();
 
+  function generateProductCode() {
+    const timestamp = Date.now(); // Get the current timestamp
+    const randomChars = Math.random().toString(36).substring(2, 6); // Generate random characters
+
+    // Combine timestamp and random characters to create the product code
+    const productCode = `${timestamp}`;
+
+    return productCode;
+  }
+
   const [image, setImage] = useState<any>(null);
   const [state, formAction] = useFormState(addNewProduct, {
     message: "",
@@ -21,6 +31,7 @@ function ProductModal({ categories }: any) {
       name: [],
     },
   });
+  const [code, setCOde] = useState(generateProductCode());
   const form = useRef(null);
   const router = useRouter();
   useEffect(() => {
@@ -37,6 +48,7 @@ function ProductModal({ categories }: any) {
       }
     }
   }, [state, router, setModal]);
+  console.log(generateProductCode());
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -101,9 +113,20 @@ function ProductModal({ categories }: any) {
 
           <div className="flex flex-col gap-2">
             <h2 className="text-xs my-auto">Product Code</h2>
-            <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
+            <div className="bg-slate-200 border border-gray-200 rounded-md px-3 p-2">
               <input
                 name="code"
+                hidden
+                onChange={(e) => setCOde(e.target.value)}
+                value={code}
+                type="number"
+                placeholder="e.g 10101"
+                className="text-xs bg-transparent outline-none w-full"
+              />
+              <input
+                disabled
+                onChange={(e) => setCOde(e.target.value)}
+                value={code}
                 type="number"
                 placeholder="e.g 10101"
                 className="text-xs bg-transparent outline-none w-full"
@@ -154,8 +177,9 @@ function ProductModal({ categories }: any) {
               />
             </div>
           </div>
-          <div className="flex flex-col gap-2">
-            <h2 className="text-xs my-auto">Product Type</h2>
+
+          <div className=" flex-col gap-2 hidden">
+            <h2 className="text-xs my-auto ">Product Type</h2>
             <div className="bg-white border border-gray-200 rounded-md px-3 p-2">
               <input
                 name="type"
@@ -165,6 +189,7 @@ function ProductModal({ categories }: any) {
               />
             </div>
           </div>
+
           <div className="flex flex-col gap-2">
             <h2 className="text-xs my-auto">Category</h2>
             <select
@@ -186,6 +211,10 @@ function ProductModal({ categories }: any) {
                 </option>
               ))}
             </select>
+          </div>
+          <div className="flex-col gap-2 flex">
+            <h2 className="text-xs my-auto ">Expiry Date</h2>
+            <DatePicker name="expiry" size="sm" variant="bordered" />
           </div>
           <div className="flex flex-col gap-2 col-span-2">
             <h2 className="text-xs my-auto">Description</h2>
