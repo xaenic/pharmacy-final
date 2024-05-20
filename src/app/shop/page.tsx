@@ -27,6 +27,11 @@ export default async function Shop() {
 
   const categroies = (await getCategories()).rows;
   const products = await getProducts();
+
+  const nonExpiredProducts = products.filter(
+    (product) => new Date(product.expiry_date) > new Date()
+  );
+
   return (
     <>
       <div className="min-h-screen bg-white relative">
@@ -53,7 +58,10 @@ export default async function Shop() {
                   ))}
                 </ul>
               </aside>
-              <Products products={products} user_id={session?.user.staff_id} />
+              <Products
+                products={nonExpiredProducts}
+                user_id={session?.user.staff_id}
+              />
             </section>
           </section>
           <Footer />

@@ -5,8 +5,8 @@ import LogoutIcon from "@/components/icons/LogoutIcon";
 const LogoutButton = () => {
   return (
     <div className="flex  gap-3">
-      <LogoutIcon className="text-gray-700 text-xs w-4 h-4" />
-      <button className="text-gray-700 text-xs" onClick={() => signOut()}>
+      <LogoutIcon className="text-gray-700 text-sm w-4 h-4" />
+      <button className="text-gray-700 text-sm" onClick={() => signOut()}>
         Logout
       </button>
     </div>

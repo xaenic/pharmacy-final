@@ -72,10 +72,11 @@ export const addProduct = async (
   quantity: string,
   category: string,
   description: string,
-  type: string
+  type: string,
+  expiry: string
 ) => {
   const ok =
-    await sql`INSERT INTO product (product_name,image,code,price,manufacturer,brand,quantity,category_id,description,type) VALUES(${product_name}, ${image}, ${code}, ${price}, ${manufacturer}, ${brand}, ${quantity}, ${category},${description},${type})`;
+    await sql`INSERT INTO product (product_name,image,code,price,manufacturer,brand,quantity,category_id,description,type,expiry_date) VALUES(${product_name}, ${image}, ${code}, ${price}, ${manufacturer}, ${brand}, ${quantity}, ${category},${description},${type},${expiry})`;
 
   return ok;
 };
@@ -96,10 +97,11 @@ export const updateProduct = async (
   category: string,
   id: string,
   description: string,
-  type: string
+  type: string,
+  expiry: string
 ) => {
   const ok =
-    await sql`UPDATE product SET product_name = ${product_name}, description = ${description}, image = ${image}, code = ${code}, price = ${price}, manufacturer = ${manufacturer}, brand = ${brand}, quantity = ${quantity}, category_id = ${category},type = ${type} WHERE id = ${id}`;
+    await sql`UPDATE product SET product_name = ${product_name}, description = ${description}, image = ${image}, code = ${code}, price = ${price}, manufacturer = ${manufacturer}, brand = ${brand}, quantity = ${quantity}, category_id = ${category},type = ${type}, expiry_date = ${expiry} WHERE id = ${id}`;
   return ok;
 };
 

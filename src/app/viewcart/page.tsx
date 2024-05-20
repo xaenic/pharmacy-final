@@ -23,6 +23,8 @@ export default async function ViewCart() {
   const items: CartItem[] | null = session
     ? await geTCartItems(session?.user.staff_id)
     : null;
+  let total = 0;
+  if (items) items.map((e, i) => (total += e.price * e.qty));
   return (
     <>
       <div className="min-h-screen bg-white relative">
@@ -39,7 +41,11 @@ export default async function ViewCart() {
               </div>
             </section>
             <section className="bg-white p-10 flex items-start gap-4 min-h-screen">
-              <CartView cartItems={items} user_id={session?.user?.staff_id} />
+              <CartView
+                total={total}
+                cartItems={items}
+                user_id={session?.user?.staff_id}
+              />
             </section>
           </section>
           <Footer />

@@ -26,7 +26,7 @@ export const authConfig = {
         nextUrl.pathname.startsWith("/login") ||
         nextUrl.pathname.startsWith("/register");
       if (isLoggedIn) {
-        const isAdmin = me?.role == "admin";
+        const isAdmin = me?.role == "admin" || me?.role == "staff";
         if (isAdmin && !isOnDashboard)
           return Response.redirect(new URL("/admin", nextUrl));
         if (!isAdmin && isOnDashboard)

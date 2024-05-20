@@ -17,6 +17,9 @@ import AddIcon from "@/components/icons/AddIcon";
 import SearchProduct from "@/components/layout/Inventory/SearchProduct";
 import { Product } from "@/lib/types/Product";
 import { getAllTransactions } from "@/lib/db/transaction";
+import TransactionTable from "@/components/ui/Table/TransactionTable";
+import { Button } from "@nextui-org/button";
+import { Link } from "@nextui-org/link";
 export const fetchCache = "force-no-store";
 export default async function ATransactions() {
   const transactions = await getAllTransactions();
@@ -32,6 +35,7 @@ export default async function ATransactions() {
       />
       <Sidebar />
       <main className="p-4 xl:ml-52  xl:pt-4 flex flex-col w-full relative">
+        <Modals categories={null} />
         <Topbar title="Inventory" />
         <div className="mt-10">
           <div className="flex justify-between items-center flex-wrap gap-4">
@@ -43,9 +47,18 @@ export default async function ATransactions() {
             </div>
             <div className="flex gap-3">
               <SearchProduct />
+              <Button
+                as={Link}
+                href="/admin/transactions/add"
+                color="primary"
+                size="md"
+              >
+                Add Transaction
+              </Button>
             </div>
           </div>
         </div>
+        <TransactionTable transactions={transactions} />
       </main>
     </div>
   );

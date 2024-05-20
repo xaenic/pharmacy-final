@@ -24,7 +24,7 @@ const Sidebar = () => {
         active ? "left-0" : "left-[-1000px]"
       } z-40 fixed top-0  bottom-0 xl:left-0   duration-300 transition-all  bg-white   border border-gray-300   pb-36   w-56 xl:w-48  p-5 rounded-xl xl:mt-5 xl:ml-3 h-screen xl:h-[95%] xl:m-4     flex-col justify-between `}
     >
-      <div className="h-full text-gray-700 text-xs">
+      <div className="h-full text-gray-700 text-sm">
         <div
           onClick={(e) => {
             setSidebar({
@@ -186,13 +186,36 @@ const Sidebar = () => {
         >
           <div
             className={`${
-              path.toString() == "/admin/transactions" && !collapse
+              path.toString().includes("/admin/transactions") && !collapse
                 ? "bg-blue-600 text-white"
                 : ""
             } flex gap-2 items-center hover:bg-blue-500 hover:text-white  cursor-pointer texr-gray-700 rounded-lg px-3 p-2`}
           >
             <DragIcon />
             <span className="w-full">Transactions</span>
+          </div>
+        </Link>
+        <Link
+          onClick={(e) => {
+            setSidebar({
+              active: false,
+            });
+            e.stopPropagation();
+            setCollapse(false);
+          }}
+          href="/admin/transactions"
+          id="widget_2"
+          className="mt-5 flex flex-col gap-5"
+        >
+          <div
+            className={`${
+              path.toString().includes("/admin/returns") && !collapse
+                ? "bg-blue-600 text-white"
+                : ""
+            } flex gap-2 items-center hover:bg-blue-500 hover:text-white  cursor-pointer texr-gray-700 rounded-lg px-3 p-2`}
+          >
+            <DragIcon />
+            <span className="w-full">Returns</span>
           </div>
         </Link>
       </div>

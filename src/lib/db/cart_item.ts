@@ -8,7 +8,11 @@ export const geTCartItems = async (
   try {
     const { rows } =
       await sql`SELECT * from cart_item INNER JOIN product ON product.id = cart_item.product_id where user_id=${user_id} ORDER BY date_created DESC`;
-    return rows as CartItem[];
+
+    let ok = rows as CartItem[];
+
+    const bogo = ok.filter((e) => new Date(e.expiry_date) > new Date());
+    return bogo as CartItem[];
   } catch {
     return null;
   }

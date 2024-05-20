@@ -9,39 +9,39 @@ import { useEffect, useState } from "react";
 import { Product } from "@/lib/types/Product";
 import { useSearch } from "@/store/store";
 import { ClipLoader } from "react-spinners";
+import CategoryRow from "./CategoryRow";
+import { Transaction } from "@/lib/types/Transaction";
+import TransactionRow from "./TransactionRow";
 export const dynamic = "force-dynamic";
-function Table({ results }: { results: Product[] }) {
-  const [products, setProducts] = useState<Product[]>(results);
-  const [old, setOld] = useState<Product[]>();
+function TransactionTable({
+  transactions,
+}: {
+  transactions: Transaction[] | null;
+}) {
+  const [products, setProducts] = useState<any>(transactions);
+  const [old, setOld] = useState<any>();
   const [loading, setLoading] = useState(true);
 
   const { term } = useSearch();
   useEffect(() => {
-    // const fetchProducts = async () => {
-    //   const results: Product[] = await getProducts();
-    //   setProducts(results);
-    //   setOld(results);
     setLoading(false);
-    // };
-    // fetchProducts();
-    // console.log("triggered");
-    console.log(results);
-    setProducts(results);
-    setOld(results);
-  }, [results]);
+    setProducts(transactions);
+    setOld(transactions);
+  }, [transactions]);
 
   useEffect(() => {
+    console.log(term);
     if (term == "") {
       if (old) {
         setProducts(old);
       }
       return;
     }
-    const filtered = old?.filter(
-      (product) =>
-        product.product_name.toLowerCase().includes(term) ||
-        product.code.includes(term)
-    );
+
+    const filtered = old?.filter((product: any) => {
+      if ((product.id + "").includes(term)) return true;
+      if (product.status.toLowerCase().includes(term)) return true;
+    });
     if (filtered) setProducts(filtered);
   }, [term, old]);
   return (
@@ -57,44 +57,28 @@ function Table({ results }: { results: Product[] }) {
         </div>
       ) : (
         <table className="w-full text-sm rounded-md text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
-          <thead className="text-sm   rounded-md  border-b border-gray-200">
+          <thead className="text-xs   rounded-md  border-b border-gray-200">
             <tr>
               <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center ">
-                CODE
-              </th>
-              <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
-                Image
+                TRANSACTION ID
               </th>
 
               <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
-                Product Name
+                DATE
               </th>
 
               <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
-                Price
+                AMOUNT
               </th>
               <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
-                Manufacturer
-              </th>
-              <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
-                Generic Name
-              </th>
-              <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
-                Category
-              </th>
-
-              <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
-                Quantity
-              </th>
-              <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
-                Status
+                STATUS
               </th>
               <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center"></th>
             </tr>
           </thead>
           <tbody id="tbody" className="relative">
             {products?.map((e: Product, i: number) => (
-              <RowAnimated key={i} e={e} i={i} />
+              <TransactionRow key={i} e={e} i={i} />
             ))}
           </tbody>
         </table>
@@ -103,4 +87,4 @@ function Table({ results }: { results: Product[] }) {
   );
 }
 
-export default Table;
+export default TransactionTable;

@@ -6,6 +6,7 @@ import EditCategoryModal from "@/components/ui/modals/CategoryModals/EditCategor
 import DeleteModal from "@/components/ui/modals/DeleteModal";
 import EditModal from "@/components/ui/modals/EditModal";
 import ProductModal from "@/components/ui/modals/ProductModal";
+import TransactionModal from "@/components/ui/modals/TransactionModals/TransactionModal";
 import { useModalStore } from "@/store/store";
 import { useEffect } from "react";
 
@@ -23,7 +24,11 @@ function Modals({ categories }: any) {
       {active && shown == "EditCategory" ? (
         <EditCategoryModal categories={categories} id={id} />
       ) : null}
+      {active && shown == "EditTransaction" ? (
+        <TransactionModal categories={categories} id={id} />
+      ) : null}
       {active && shown == "Delete" ? <DeleteModal id={id} /> : null}
+
       {active && shown == "DeleteCategory" ? (
         <DeleteCategoryModal id={id} />
       ) : null}

@@ -26,6 +26,7 @@ import {
   updateTransaction,
 } from "./db/transaction";
 import { stat } from "fs";
+import { Product } from "./types/Product";
 
 export async function authenticate(
   prevState: string | undefined,
@@ -171,6 +172,7 @@ export async function addNewProduct(prevState: any, formData: FormData) {
   const category = formData.get("category") as string;
   const description = formData.get("description") as string;
   const type = formData.get("type") as string;
+  const expiry = formData.get("expiry") as string;
   if (product_name.length == 0) {
     return {
       message: "fail",
@@ -187,19 +189,28 @@ export async function addNewProduct(prevState: any, formData: FormData) {
       },
     };
   }
-
-  const ok = await addProduct(
-    product_name,
-    image,
-    code,
-    price,
-    brand,
-    manufacturer,
-    quantity,
-    category,
-    description,
-    type
-  );
+  try {
+    const ok = await addProduct(
+      product_name,
+      image,
+      code,
+      price,
+      brand,
+      manufacturer,
+      quantity,
+      category,
+      description,
+      type,
+      expiry
+    );
+  } catch (e) {
+    return {
+      message: "fail",
+      errors: {
+        name: ["Invalid Expiry Date"],
+      },
+    };
+  }
 
   return {
     message: "Success",
@@ -247,7 +258,7 @@ export async function placeOrder(prevState: any, formData: any) {
     zipcode,
     address
   );
-  let total = 0;
+  let total = 32 + 10;
   const items: CartItem[] | null = await geTCartItems(user_id);
   if (!items)
     return {
@@ -267,7 +278,7 @@ export async function placeOrder(prevState: any, formData: any) {
         name: ["error occured"],
       },
     };
-  const row = await makeTransaction(user_id, items.length, total);
+  const row = await makeTransaction(user_id, items.length, total, "Pending");
   if (!row)
     return {
       message: "fail",
@@ -288,16 +299,12 @@ export async function placeOrder(prevState: any, formData: any) {
       e.category_id + "",
       e.id + "",
       e.description,
-      e.type
+      e.type,
+      e.expiry_date
     );
     await addItemToTransaction(row[0].id, e.product_id, e.qty);
   });
-  return {
-    message: "Success",
-    errors: {
-      name: [],
-    },
-  };
+  return row[0].id;
 }
 export async function updateNewProduct(prevState: any, formData: FormData) {
   const product_name = formData.get("product_name") as string;
@@ -311,6 +318,7 @@ export async function updateNewProduct(prevState: any, formData: FormData) {
   const description = formData.get("description") as string;
   const type = formData.get("type") as string;
   const id = formData.get("id_number") as string;
+  const expiry = formData.get("expiry") as string;
 
   if (product_name.length == 0) {
     return {
@@ -328,20 +336,29 @@ export async function updateNewProduct(prevState: any, formData: FormData) {
       },
     };
   }
-
-  const ok = await updateProduct(
-    product_name,
-    image,
-    code,
-    price,
-    brand,
-    manufacturer,
-    quantity,
-    category,
-    id,
-    description,
-    type
-  );
+  try {
+    const ok = await updateProduct(
+      product_name,
+      image,
+      code,
+      price,
+      brand,
+      manufacturer,
+      quantity,
+      category,
+      id,
+      description,
+      type,
+      expiry
+    );
+  } catch (e) {
+    return {
+      message: "fail",
+      errors: {
+        name: ["Enter a Valid Expiry Date"],
+      },
+    };
+  }
 
   return {
     message: "Success",
@@ -361,4 +378,42 @@ export async function deleteNewProduct(prevState: any, formData: FormData) {
       name: [],
     },
   };
+}
+
+export async function setTransactionStatus(id: number, status: string) {
+  await updateTransaction(1, id, status);
+}
+
+export async function addTransaction(items: Product[]) {
+  let total = 0;
+
+  items.map((e) => (total += e.quantity * e.price));
+
+  const session = (await auth()) as any;
+  const row = await makeTransaction(
+    session?.user?.staff_id,
+    items.length,
+    total,
+    "Completed"
+  );
+  if (!row) return null;
+
+  items.map(async (e, i) => {
+    const ok = await updateProduct(
+      e.product_name,
+      e.image,
+      e.code,
+      e.price + "",
+      e.brand,
+      e.manufacturer,
+      e.quantity - e.quantity + "",
+      e.category_id + "",
+      e.id + "",
+      e.description,
+      e.type,
+      e.expiry_date
+    );
+    await addItemToTransaction(row[0].id, e.id, e.quantity);
+  });
+  return row[0].id;
 }

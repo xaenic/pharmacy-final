@@ -11,4 +11,5 @@ export type Product = {
   manufacturer: string;
   category_name: string | null;
   type: string;
+  expiry_date: string;
 };

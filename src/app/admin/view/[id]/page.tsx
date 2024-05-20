@@ -21,15 +21,27 @@ import Image from "next/image";
 interface Props {
   params: { id: any };
 }
+export const fetchCache = "force-no-store";
 export default async function Inventory({ params }: Props) {
   const { id } = params;
   const product: Product = await getProductById(id);
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleString("en-US", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
+  };
   if (!product) return redirect("/admin");
   return (
     <div className="flex min-h-screen bg-white">
       <Toaster
         toastOptions={{
-          className: "text-xs text-red-600 bg-orange-600",
+          className: "text-sm text-red-600 bg-orange-600",
           style: {
             color: "#000",
           },
@@ -42,14 +54,14 @@ export default async function Inventory({ params }: Props) {
           <div className="flex justify-between items-center flex-wrap gap-2">
             <div className="flex flex-col">
               <span className="text-xl font-medium">Medicine Details</span>
-              <small className="text-xs text-slate-500">
+              <small className="text-sm text-slate-500">
                 Product Code {product.code}
               </small>
             </div>
             <div>
               <Link
                 href="/admin/inventory/products"
-                className="text-xs flex items-center border p-2 px-4 gap-3 rounded-md hover:bg-gray-200 transition-colors duration-200 "
+                className="text-sm flex items-center border p-2 px-4 gap-3 rounded-md hover:bg-gray-200 transition-colors duration-200 "
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +87,7 @@ export default async function Inventory({ params }: Props) {
         <div className="mt-10 border bg-white p-5">
           <h1>Medicine Information</h1>
           <div className="grid grid-cols-3 xl:grid-cols-4 gap-4 p-5 pl-0">
-            <div className="text-xs flex flex-col">
+            <div className="text-sm flex flex-col">
               <span className="text-slate-400 ">Image</span>
               <div className="w-24 h-24  overflow-hidden rounded-lg">
                 <Image
@@ -88,51 +100,55 @@ export default async function Inventory({ params }: Props) {
                 />
               </div>
             </div>
-            <div className="text-xs flex flex-col">
+            <div className="text-sm flex flex-col">
               <span className="text-slate-400 ">Name</span>
               <span className="text-gray-600">{product.product_name}</span>
             </div>
-            <div className="text-xs flex flex-col">
+            <div className="text-sm flex flex-col">
               <span className="text-slate-400 ">Product Code</span>
               <span className="text-gray-600">#{product.code}</span>
             </div>
-            <div className="text-xs flex flex-col">
+            <div className="text-sm flex flex-col">
               <span className="text-slate-400 ">Generic Name</span>
               <span className="text-gray-600">{product.brand}</span>
             </div>
-            <div className="text-xs flex flex-col">
+            <div className="text-sm flex flex-col">
               <span className="text-slate-400 ">Manufacturer</span>
               <span className="text-gray-600">{product.manufacturer}</span>
             </div>
-            <div className="text-xs flex flex-col">
+            <div className="text-sm flex flex-col">
               <span className="text-slate-400 ">Category</span>
               <span className="text-gray-600">{product.category_name}</span>
             </div>
-            <div className="text-xs flex flex-col">
+            <div className="text-sm flex flex-col">
               <span className="text-slate-400 ">Type</span>
               <span className="text-gray-600">{product.type}</span>
             </div>
           </div>
-          <div className="text-xs ">
+          <div className="text-sm ">
             <h1 className="text-slate-400">Description</h1>
             <p>{product.description}</p>
+          </div>
+          <div className="text-sm mt-5">
+            <h1 className="text-slate-400">Expiry Date</h1>
+            <p>{formatDate(product.expiry_date)}</p>
           </div>
           <div className="mt-5 border-t pt-5">
             <h1>Stock & Price</h1>
             <div className="flex gap-14 flex-wrap items-start p-5 pl-0">
-              <div className="text-xs flex flex-col">
+              <div className="text-sm flex flex-col">
                 <span className="text-slate-400 ">Price</span>
                 <span className="text-gray-600">{product.price}</span>
               </div>
-              <div className="text-xs flex flex-col">
+              <div className="text-sm flex flex-col">
                 <span className="text-slate-400 ">Starting Stock</span>
                 <span className="text-gray-600">{product.quantity}</span>
               </div>
-              <div className="text-xs flex flex-col">
+              <div className="text-sm flex flex-col">
                 <span className="text-slate-400 ">Current Stock</span>
                 <span className="text-gray-600">{product.quantity}</span>
               </div>
-              <div className="text-xs flex flex-col">
+              <div className="text-sm flex flex-col">
                 <span className="text-slate-400 ">Stock Status</span>
                 <span
                   className={` ${

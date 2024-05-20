@@ -9,9 +9,11 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 function CartView({
+  total,
   cartItems,
   user_id,
 }: {
+  total: number;
   cartItems: CartItem[] | null;
   user_id: number;
 }) {
@@ -83,7 +85,7 @@ function CartView({
                       {e.qty}
                     </td>
                     <td className=" border px-4 py-4 border-none text-center   text-gray-700">
-                      {e.qty * e.price}
+                      ₱{e.qty * e.price}
                     </td>
                   </tr>
                 ))
@@ -112,11 +114,11 @@ function CartView({
           <h1 className="text-2xl font-medium ">Cart Summary</h1>
           <div className="flex justify-between items-center w-full mt-6">
             <h2 className="font-medium text-xl">Subtotal:</h2>
-            <span>23123</span>
+            <span>₱{total}</span>
           </div>
           <div className="flex justify-between items-center w-full mt-6">
             <h2 className="font-medium text-2xl">Total:</h2>
-            <span>23123</span>
+            <span>₱{total}</span>
           </div>
           <Button
             as={Link}

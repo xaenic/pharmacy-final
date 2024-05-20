@@ -41,10 +41,11 @@ function CheckoutView({
   const { register, handleSubmit, control } = useForm();
   const { isSubmitting, isSubmitSuccessful } = useFormState({ control });
   const router = useRouter();
-
+  const [id, setId] = useState();
   const onSubmit = async (data: any) => {
     try {
-      await placeOrder("a", data);
+      const ok = await placeOrder("a", data);
+      setId(ok);
       // Redirect after successful form submission
       // Change '/thank-you' to the path you want to redirect to
     } catch (error) {
@@ -53,10 +54,10 @@ function CheckoutView({
   };
 
   useEffect(() => {
-    if (isSubmitSuccessful) {
-      router.push("/thank-you");
+    if (isSubmitSuccessful && id) {
+      router.push(`/thank-you/${id}`);
     }
-  }, [isSubmitSuccessful, router]);
+  }, [isSubmitSuccessful, router, id]);
   return (
     <>
       <form
@@ -168,13 +169,33 @@ function CheckoutView({
                     </span>
                     <span className="text-sky-500"> x {e.qty}</span>
                   </div>
-                  <span className="">{e.price * e.qty}</span>
+                  <span className="">₱{e.price * e.qty}</span>
                 </div>
               ))}
             </div>
-            <div className="flex items-center justify-between mt-5 mb-5">
+            <div className="flex items-center justify-between ">
+              <span className="text-xl font-semibold capitalize">
+                Payment Method
+              </span>
+              <span className="text-xl font-semibold">Cash On Delivery</span>
+            </div>
+            <div className="flex items-center justify-between ">
+              <span className="text-xl font-medium capitalize">Subtotal</span>
+              <span className="text-xl font-medium">₱{total}</span>
+            </div>
+            <div className="flex justify-between items-center mt-4">
+              <span className="text-sm font-medium">Processing Fee</span>
+              <span className="text-sm font-medium">₱10.00</span>
+            </div>
+            <div className="flex justify-between items-center mt-4">
+              <span className="text-sm font-medium">TAX</span>
+              <span className="text-sm font-medium">₱32.00</span>
+            </div>
+            <div className="flex items-center justify-between ">
               <span className="text-2xl font-semibold capitalize">TOTAL</span>
-              <span className="text-xl font-semibold">{total}</span>
+              <span className="text-xl font-semibold">
+                ₱{total + 10.0 + 32.0}
+              </span>
             </div>
             <small className="text-gray-500 ">
               Your personal data will be used to process your order, support
@@ -182,7 +203,7 @@ function CheckoutView({
               described in our privacy policy.
             </small>
 
-            {isSubmitting ? (
+            {isSubmitting && !isSubmitSuccessful ? (
               <Button type="submit" color="primary" size="lg" isLoading>
                 Placing Order...
               </Button>
