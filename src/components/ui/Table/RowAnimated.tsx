@@ -3,6 +3,27 @@ import { motion } from "framer-motion";
 import ActionButtons from "./ActionButtons";
 import Image from "next/image";
 function RowAnimated({ e, i }: any) {
+  const formatDate = (dateString: string, ok = false) => {
+    if (!dateString) return "None";
+    const date = new Date(dateString);
+
+    if (ok)
+      return date.toLocaleString("en-US", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      });
+
+    if (!ok)
+      return date.toLocaleString("en-US", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      });
+  };
   return (
     <>
       <motion.tr
@@ -34,10 +55,10 @@ function RowAnimated({ e, i }: any) {
           ₱ {e.price}
         </td>
         <td className=" border px-4 py-4 border-none text-center text-sm  text-gray-500">
-          {e.manufacturer}
+          {formatDate(e.expiry_date, false)}
         </td>
         <td className=" border px-4 py-4 border-none text-center text-sm  text-gray-500">
-          {e.brand}
+          {formatDate(e.restock_date, false)}
         </td>
         <td className=" border px-4 py-4 border-none text-center text-sm  text-gray-500">
           {e.category_name}
@@ -49,14 +70,18 @@ function RowAnimated({ e, i }: any) {
         <td className="border px-4 py-4 border-none text-center text-sm  text-gray-500">
           <span
             className={` ${
-              e.quantity == 0
+              new Date(e.expiry_date) < new Date()
+                ? "text-purple-500"
+                : e.quantity == 0
                 ? " text-red-500"
                 : e.quantity <= 50
                 ? " text-orange-500"
                 : " text-green-500"
             }   bg-opacity-20 px-2 p-1 rounded-md text-sm font-medium`}
           >
-            {e.quantity == 0
+            {new Date(e.expiry_date) < new Date()
+              ? "Expired"
+              : e.quantity == 0
               ? "No Stock"
               : e.quantity <= 50
               ? "Low"

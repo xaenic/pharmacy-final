@@ -4,10 +4,29 @@ import { IUser } from "../models/userModel";
 import { Product } from "../types/Product";
 
 //users
-export const getUser = async (userEmail: string): Promise<IUser | null> => {
+export const getUser = async (
+  userEmail: string,
+  id: number | string = ""
+): Promise<IUser | null> => {
   try {
-    const { rows } = await sql`SELECT * from USERS where email=${userEmail}`;
-    return rows[0] as IUser;
+    let ok;
+    if (id != "") {
+      const { rows } = await sql`SELECT * from USERS where staff_id = ${id}`;
+      ok = rows as any;
+    } else {
+      const { rows } = await sql`SELECT * from USERS where email=${userEmail} `;
+      ok = rows as any;
+    }
+
+    return ok[0] as IUser;
+  } catch {
+    return null;
+  }
+};
+export const getUsers = async (): Promise<IUser[] | null> => {
+  try {
+    const { rows } = await sql`SELECT * from USERS ORDER BY staff_id `;
+    return rows as IUser[];
   } catch {
     return null;
   }
@@ -24,6 +43,18 @@ export const saveUser = async (User: IUser) => {
     const { rows } =
       await sql`INSERT INTO users (firstname,lastname,email, gender, phone_number, role,password,age) VALUES(${User.firstname}, ${User.lastname},${User.email}, ${User.gender}, ${User.phone_number}, ${User.role}, ${User.password} ,${User.age})`;
     return "Successfully Registered";
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+
+  return;
+};
+export const updateUser = async (User: IUser) => {
+  try {
+    const { rows } =
+      await sql`UPDATE users set firstname = ${User.firstname}, lastname = ${User.lastname}, email = ${User.email}, gender = ${User.gender}, active= ${User.active},role = ${User.role} WHERE staff_id = ${User.staff_id}`;
+    return "Successfully Updated";
   } catch (e) {
     console.log(e);
     return null;
@@ -98,10 +129,13 @@ export const updateProduct = async (
   id: string,
   description: string,
   type: string,
-  expiry: string
+  expiry: string,
+  restock_date: string | null = null
 ) => {
+  let yes =
+    restock_date?.split("[")[0] == "" ? null : restock_date?.split("[")[0];
   const ok =
-    await sql`UPDATE product SET product_name = ${product_name}, description = ${description}, image = ${image}, code = ${code}, price = ${price}, manufacturer = ${manufacturer}, brand = ${brand}, quantity = ${quantity}, category_id = ${category},type = ${type}, expiry_date = ${expiry} WHERE id = ${id}`;
+    await sql`UPDATE product SET product_name = ${product_name},  restock_date = ${yes}, description = ${description}, image = ${image}, code = ${code}, price = ${price}, manufacturer = ${manufacturer}, brand = ${brand}, quantity = ${quantity}, category_id = ${category},type = ${type}, expiry_date = ${expiry} WHERE id = ${id}`;
   return ok;
 };
 

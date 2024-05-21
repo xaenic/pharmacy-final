@@ -39,7 +39,14 @@ function TransactionModal({
     });
     router.refresh();
   };
-  const city = ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"];
+  const city = [
+    "Pending",
+    "Processing",
+    "Shipped",
+    "Delivered",
+    "Cancelled",
+    "Returned",
+  ];
   return (
     <motion.div
       initial={{ opacity: 0 }}

@@ -18,8 +18,8 @@ interface Props {
   params: { id: any };
 }
 export default async function AddTransaction({ params }: Props) {
-  const items: Product[] = await getProducts();
-
+  const ok: Product[] = await getProducts();
+  let items = ok.filter((e) => new Date(e.expiry_date) > new Date());
   return (
     <div className="flex min-h-screen bg-white">
       <Toaster

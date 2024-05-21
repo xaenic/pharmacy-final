@@ -4,6 +4,7 @@ import { addToCart } from "@/lib/db/cart_item";
 import { Product } from "@/lib/types/Product";
 import { useModalStore } from "@/store/store";
 import { Button } from "@nextui-org/button";
+import { Link } from "@nextui-org/link";
 
 import { Select, SelectItem } from "@nextui-org/select";
 import Image from "next/image";
@@ -11,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-function Products({ products, user_id }: any) {
+function Products({ products, categories, user_id }: any) {
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
   const [loading, setLoading] = useState<{ [key: number]: boolean }>({});
   const [items, setItems] = useState(products);
@@ -90,15 +91,33 @@ function Products({ products, user_id }: any) {
 
   const searchHandler = (term: string) => {
     let searched = [...products];
-
     if (term == "") {
       setItems(oldItems);
+      return;
     }
 
-    searched = searched?.filter((product) =>
-      product.product_name.toLowerCase().includes(term)
+    searched = searched?.filter(
+      (product) =>
+        product.product_name.toLowerCase().includes(term) ||
+        product.category_name === term
     );
 
+    setItems(searched);
+  };
+  const amaw = (term: string) => {
+    let searched = [...products];
+
+    if (term == "" || term == "All") {
+      setItems(oldItems);
+
+      return;
+    }
+    searched = searched?.filter(
+      (product) =>
+        product.product_name.toLowerCase().includes(term) ||
+        product.category_name === term
+    );
+    console.log(searched);
     setItems(searched);
   };
   const sortItems = (key: string) => {
@@ -120,6 +139,26 @@ function Products({ products, user_id }: any) {
           },
         }}
       />
+      <aside className="p-5 border rounded-sm hidden lg:flex flex-col gap-4 ">
+        <h1 className="text-lg font-medium">Product Categories</h1>
+        <ul className="text-sm text-gray-500 font-normal">
+          <li
+            onClick={() => amaw("All")}
+            className="cursor-pointer hover:text-sky-500 duration-200 transition-colors border-t p-2"
+          >
+            <div>All</div>
+          </li>
+          {categories.map((e: any, i: number) => (
+            <li
+              onClick={() => amaw(e.category_name)}
+              key={i}
+              className="cursor-pointer hover:text-sky-500 duration-200 transition-colors border-t p-2"
+            >
+              <div>{e.category_name}</div>
+            </li>
+          ))}
+        </ul>
+      </aside>
       <div className="w-full">
         <div className="flex justify-between flex-wrap gap-4">
           <Select
@@ -156,7 +195,7 @@ function Products({ products, user_id }: any) {
             ? items.map((e: Product) => (
                 <div
                   key={e.id}
-                  className="p-4 gap-2 flex justify-center items-start flex-col border border-gray-200 h-72"
+                  className="p-4 gap-2 flex justify-center items-start flex-col border border-gray-200 h-96"
                 >
                   <Image
                     src={e.image}
@@ -171,6 +210,10 @@ function Products({ products, user_id }: any) {
                   </span>
                   <h1 className="line-clamp-1 text-sm max-w-xs shrink-0">
                     {e.product_name}
+                  </h1>{" "}
+                  <h1 className="line-clamp-1 text-xs max-w-xs shrink-0">
+                    Stocks Available{" "}
+                    <span className="text-sky-500">{e.quantity}</span>
                   </h1>
                   <div className="w-full flex justify-between flex-col items-center">
                     <h2 className="text-red-500 font-medium">₱{e.price}</h2>

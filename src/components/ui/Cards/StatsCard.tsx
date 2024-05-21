@@ -1,13 +1,17 @@
+import { Statistics } from "@/app/admin/page";
+import { stat } from "fs";
 import React from "react";
 
-function StatsCard() {
+function StatsCard({ stats }: { stats: Statistics }) {
   return (
     <div className="bg-white p-4 rounded-md flex flex-col gap-4 border shadow-sm">
       <h1 className="text-lg text-gray-700 font-medium">Store Statistics</h1>
       <div className="flex justify-between">
         <div>
           <small className="text-slate-500 font-medium">Sales</small>
-          <h3 className="text-gray-700 font-medium">1,750</h3>
+          <h3 className="text-gray-700 font-medium">
+            {stats.sales.toLocaleString()}
+          </h3>
         </div>
         <div className="bg-green-500 bg-opacity-15 p-3 flex items-center rounded-md">
           <svg
@@ -29,7 +33,9 @@ function StatsCard() {
       <div className="flex justify-between">
         <div>
           <small className="text-slate-500 font-medium">Customers</small>
-          <h3 className="text-gray-700 font-medium">2,750</h3>
+          <h3 className="text-gray-700 font-medium">
+            {stats.customers.toLocaleString()}
+          </h3>
         </div>
         <div className="bg-blue-500 bg-opacity-15 p-3 flex items-center rounded-md">
           <svg
@@ -49,7 +55,9 @@ function StatsCard() {
       <div className="flex justify-between">
         <div>
           <small className="text-slate-500 font-medium">Products</small>
-          <h3 className="text-gray-700 font-medium">750</h3>
+          <h3 className="text-gray-700 font-medium">
+            {stats.products.toLocaleString()}
+          </h3>
         </div>
         <div className="bg-rose-500 bg-opacity-15 p-3 flex items-center rounded-md">
           <svg
@@ -69,7 +77,9 @@ function StatsCard() {
       <div className="flex justify-between">
         <div>
           <small className="text-slate-500 font-medium">Categories</small>
-          <h3 className="text-gray-700 font-medium">68</h3>
+          <h3 className="text-gray-700 font-medium">
+            {stats.categories.toLocaleString()}
+          </h3>
         </div>
         <div className="bg-orange-500 bg-opacity-15 p-3 flex items-center rounded-md">
           <svg

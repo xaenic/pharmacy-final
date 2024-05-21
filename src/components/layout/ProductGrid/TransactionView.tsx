@@ -14,18 +14,24 @@ function TransactionView({
   transactions: Transaction[];
   user_id: number;
 }) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<{ [key: number]: boolean }>({});
   const router = useRouter();
   const clickHandler = async (
     user_id: number,
     transaction_id: number,
     status: string
   ) => {
-    setLoading(true);
+    setLoading((prevLoading) => ({
+      ...prevLoading,
+      [transaction_id]: true,
+    }));
 
     await updateStatus(user_id, transaction_id, status);
     router.refresh();
-    setLoading(false);
+    setLoading((prevLoading) => ({
+      ...prevLoading,
+      [transaction_id]: false,
+    }));
   };
   return (
     <>
@@ -72,43 +78,55 @@ function TransactionView({
               <div className="w-full border-t p-2 text-sm flex items-end flex-col ">
                 <span>Order Total: ₱{e.total}</span>
                 <div className="flex gap-3 mt-4">
-                  {e.status == "Pending" && loading ? (
+                  {e.status == "Cancelled" ? (
                     <Button
                       onClick={() => clickHandler(user_id, e.id, "Cancelled")}
-                      color="danger"
-                      className="text-white"
-                      size="sm"
-                      isLoading
-                    >
-                      Cancel
-                    </Button>
-                  ) : e.status == "Pending" ? (
-                    <Button
-                      onClick={() => clickHandler(user_id, e.id, "Cancelled")}
-                      color="danger"
-                      className="text-white"
-                      size="sm"
-                    >
-                      Cancel
-                    </Button>
-                  ) : e.status == "Cancelled" && !loading ? (
-                    <Button
                       color="default"
-                      className="text-white outline-none"
-                      disabled
+                      className="text-white"
                       size="sm"
                     >
                       Cancelled
                     </Button>
+                  ) : e.status == "Pending" || e.status == "Processing" ? (
+                    <Button
+                      onClick={() => clickHandler(user_id, e.id, "Cancelled")}
+                      color="danger"
+                      className="text-white"
+                      size="sm"
+                      isLoading={loading[e.id]}
+                    >
+                      Cancel Order
+                    </Button>
+                  ) : e.status == "Shipped" ? (
+                    <Button
+                      onClick={() => clickHandler(user_id, e.id, "Delivered")}
+                      color="primary"
+                      className="text-white"
+                      size="sm"
+                      isLoading={loading[e.id]}
+                    >
+                      Order Received
+                    </Button>
+                  ) : e.status == "Delivered" ? (
+                    <Button
+                      onClick={() => clickHandler(user_id, e.id, "Returned")}
+                      color="secondary"
+                      className="text-white"
+                      size="sm"
+                      isLoading={loading[e.id]}
+                    >
+                      Return Items
+                    </Button>
                   ) : (
-                    <>
-                      <Button color="primary" className="text-white" size="sm">
-                        Order Received
-                      </Button>
-                      <Button color="default" className="text-white" size="sm">
-                        Return Items
-                      </Button>
-                    </>
+                    <Button
+                      color="default"
+                      className="text-white"
+                      size="sm"
+                      disabled
+                      isLoading={loading[e.id]}
+                    >
+                      Returned
+                    </Button>
                   )}
                 </div>
               </div>

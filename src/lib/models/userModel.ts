@@ -9,4 +9,5 @@ export interface IUser {
   email: string;
   gender: string;
   role: string;
+  active: boolean;
 }

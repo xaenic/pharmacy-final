@@ -25,7 +25,9 @@ function ActionButtons({
             shown:
               reference == "Product"
                 ? "Edit"
-                : "Transaction"
+                : reference == "User"
+                ? "EditUser"
+                : reference == "Transaction"
                 ? "EditTransaction"
                 : "EditCategory",
             id: id,
@@ -40,7 +42,12 @@ function ActionButtons({
           onClick={() =>
             setModal({
               active: true,
-              shown: reference == "Product" ? "Delete" : "DeleteCategory",
+              shown:
+                reference == "Product"
+                  ? "Delete"
+                  : reference == "User"
+                  ? "DeleteUser"
+                  : "DeleteCategory",
               id: id,
               name: name,
             })

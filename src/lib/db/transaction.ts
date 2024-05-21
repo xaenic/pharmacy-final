@@ -47,6 +47,7 @@ export const updateTransaction = async (
   transaction_id: number,
   status: string
 ) => {
+  const date = new Date().toISOString();
   try {
     if (status == "Cancelled") {
       const { rows } =
@@ -70,7 +71,7 @@ export const updateTransaction = async (
       });
     }
     const { rows } =
-      await sql`UPDATE transaction set status = ${status} WHERE  id = ${transaction_id}`;
+      await sql`UPDATE transaction set status = ${status}, updated_at = ${date} WHERE  id = ${transaction_id}`;
   } catch (e) {
     console.log(e);
   }
@@ -108,7 +109,16 @@ export const getUserTransactions = async (
     return null;
   }
 };
-
+export const getReturnItems = async () => {
+  try {
+    const { rows } =
+      await sql`SELECT * FROM transaction_item a INNER JOIN product ON product.id = a.product_id INNER JOIN transaction t ON t.id =  a.transaction_id WHERE t.status = 'Returned'`;
+    return rows as Transaction_Item[];
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
 export const getAllTransactions = async () => {
   try {
     const { rows } =

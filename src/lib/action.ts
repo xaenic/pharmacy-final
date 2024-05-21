@@ -11,6 +11,7 @@ import {
   saveUser,
   updateCategory,
   updateProduct,
+  updateUser,
 } from "./db/db";
 import { IUser } from "./models/userModel";
 import { CartItem } from "./types/CartItems";
@@ -27,6 +28,7 @@ import {
 } from "./db/transaction";
 import { stat } from "fs";
 import { Product } from "./types/Product";
+import { Transaction_Item } from "./types/Transaction";
 
 export async function authenticate(
   prevState: string | undefined,
@@ -59,6 +61,7 @@ export async function register(prevState: any, formData: FormData) {
     password: await bcrypt.hash(formData.get("password") as string, 10),
     age: 25, // Assuming you want to initialize age as an empty string
     date_created: "", // Assuming date_created can be null or undefined
+    active: true,
   };
 
   if (
@@ -89,6 +92,101 @@ export async function register(prevState: any, formData: FormData) {
     }
   }
   return resp;
+}
+export async function addUser(prevState: any, formData: FormData) {
+  const user: IUser = {
+    firstname: formData.get("firstname") as string,
+    lastname: formData.get("lastname") as string,
+    email: formData.get("email") as string,
+    gender: formData.get("gender") as string,
+    phone_number: formData.get("phone_number") as string,
+    role: formData.get("role") as string,
+    password: await bcrypt.hash("123123", 10),
+
+    age: 25, // Assuming you want to initialize age as an empty string
+    date_created: "", // Assuming date_created can be null or undefined
+    active: true,
+  };
+  console.log(user);
+  if (
+    user.firstname == "" ||
+    user.lastname == "" ||
+    user.email == "" ||
+    user.gender == "" ||
+    user.phone_number == "" ||
+    user.role == "" ||
+    user.password == ""
+  )
+    return {
+      message: "fail",
+      errors: {
+        name: ["All fields are required"],
+      },
+    };
+
+  const resp = await saveUser(user);
+
+  if (resp?.includes("Email"))
+    return {
+      message: "fail",
+      errors: {
+        name: [resp],
+      },
+    };
+  return {
+    message: "Success",
+    errors: {
+      name: [],
+    },
+  };
+}
+export async function updateThisUser(prevState: any, formData: FormData) {
+  const a = formData.get("status") as string;
+  const user: IUser = {
+    staff_id: parseInt(formData.get("id") as string),
+    firstname: formData.get("firstname") as string,
+    lastname: formData.get("lastname") as string,
+    email: formData.get("email") as string,
+    gender: formData.get("gender") as string,
+    phone_number: formData.get("phone_number") as string,
+    role: formData.get("role") as string,
+    password: await bcrypt.hash("123123", 10),
+    age: 25, // Assuming you want to initialize age as an empty string
+    date_created: "", // Assuming date_created can be null or undefined
+    active: a == "true",
+  };
+
+  if (
+    user.firstname == "" ||
+    user.lastname == "" ||
+    user.email == "" ||
+    user.gender == "" ||
+    user.phone_number == "" ||
+    user.role == "" ||
+    user.password == ""
+  )
+    return {
+      message: "fail",
+      errors: {
+        name: ["All fields are required"],
+      },
+    };
+
+  const resp = await updateUser(user);
+
+  if (resp?.includes("Email"))
+    return {
+      message: "fail",
+      errors: {
+        name: [resp],
+      },
+    };
+  return {
+    message: "Success",
+    errors: {
+      name: [],
+    },
+  };
 }
 export async function addNewCategory(prevState: any, formData: FormData) {
   const category_name = formData.get("category_name") as string;
@@ -319,6 +417,8 @@ export async function updateNewProduct(prevState: any, formData: FormData) {
   const type = formData.get("type") as string;
   const id = formData.get("id_number") as string;
   const expiry = formData.get("expiry") as string;
+  const prevQ = formData.get("prevQ") as string;
+  let restock_date = formData.get("restock") as string;
 
   if (product_name.length == 0) {
     return {
@@ -336,6 +436,7 @@ export async function updateNewProduct(prevState: any, formData: FormData) {
       },
     };
   }
+  if (prevQ != quantity) restock_date = new Date().toISOString();
   try {
     const ok = await updateProduct(
       product_name,
@@ -349,9 +450,11 @@ export async function updateNewProduct(prevState: any, formData: FormData) {
       id,
       description,
       type,
-      expiry
+      expiry.split("[")[0],
+      restock_date
     );
   } catch (e) {
+    console.log(e);
     return {
       message: "fail",
       errors: {
@@ -384,7 +487,7 @@ export async function setTransactionStatus(id: number, status: string) {
   await updateTransaction(1, id, status);
 }
 
-export async function addTransaction(items: Product[]) {
+export async function addTransaction(items: Transaction_Item[]) {
   let total = 0;
 
   items.map((e) => (total += e.quantity * e.price));
@@ -406,7 +509,7 @@ export async function addTransaction(items: Product[]) {
       e.price + "",
       e.brand,
       e.manufacturer,
-      e.quantity - e.quantity + "",
+      e.quantity - e.qty + "",
       e.category_id + "",
       e.id + "",
       e.description,

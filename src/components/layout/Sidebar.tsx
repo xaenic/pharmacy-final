@@ -171,6 +171,39 @@ const Sidebar = () => {
             </Link>
           </div>
         </span>
+        <Link
+          onClick={(e) => {
+            setSidebar({
+              active: false,
+            });
+            e.stopPropagation();
+            setCollapse(false);
+          }}
+          href="/admin/users"
+          id="widget_2"
+          className="mt-5 flex flex-col gap-5"
+        >
+          <div
+            className={`${
+              path.toString().includes("/admin/users") && !collapse
+                ? "bg-blue-600 text-white"
+                : ""
+            } flex gap-2 items-center hover:bg-blue-500 hover:text-white  cursor-pointer texr-gray-700 rounded-lg px-3 p-2`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="0.88em"
+              height="1.4em"
+              viewBox="0 0 448 512"
+            >
+              <path
+                fill="currentColor"
+                d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128m89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4"
+              ></path>
+            </svg>
+            <span className="w-full">Members</span>
+          </div>
+        </Link>
 
         <Link
           onClick={(e) => {
@@ -191,7 +224,17 @@ const Sidebar = () => {
                 : ""
             } flex gap-2 items-center hover:bg-blue-500 hover:text-white  cursor-pointer texr-gray-700 rounded-lg px-3 p-2`}
           >
-            <DragIcon />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1.4em"
+              height="1.4em"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M12 21q-3.45 0-6.012-2.287T3.05 13H5.1q.35 2.6 2.313 4.3T12 19q2.925 0 4.963-2.037T19 12t-2.037-4.962T12 5q-1.725 0-3.225.8T6.25 8H9v2H3V4h2v2.35q1.275-1.6 3.113-2.475T12 3q1.875 0 3.513.713t2.85 1.924t1.925 2.85T21 12t-.712 3.513t-1.925 2.85t-2.85 1.925T12 21m2.8-4.8L11 12.4V7h2v4.6l3.2 3.2z"
+              ></path>
+            </svg>
             <span className="w-full">Transactions</span>
           </div>
         </Link>
@@ -203,7 +246,7 @@ const Sidebar = () => {
             e.stopPropagation();
             setCollapse(false);
           }}
-          href="/admin/transactions"
+          href="/admin/returns"
           id="widget_2"
           className="mt-5 flex flex-col gap-5"
         >
@@ -214,7 +257,17 @@ const Sidebar = () => {
                 : ""
             } flex gap-2 items-center hover:bg-blue-500 hover:text-white  cursor-pointer texr-gray-700 rounded-lg px-3 p-2`}
           >
-            <DragIcon />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1.4em"
+              height="1.4em"
+              viewBox="0 0 256 256"
+            >
+              <path
+                fill="currentColor"
+                d="M216 40H40a16 16 0 0 0-16 16v144a16 16 0 0 0 16 16h176a16 16 0 0 0 16-16V56a16 16 0 0 0-16-16m-32 96a8 8 0 0 1-8 8H99.31l10.35 10.34a8 8 0 0 1-11.32 11.32l-24-24a8 8 0 0 1 0-11.32l24-24a8 8 0 0 1 11.32 11.32L99.31 128H168v-24a8 8 0 0 1 16 0Z"
+              ></path>
+            </svg>
             <span className="w-full">Returns</span>
           </div>
         </Link>

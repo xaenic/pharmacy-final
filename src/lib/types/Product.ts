@@ -12,4 +12,5 @@ export type Product = {
   category_name: string | null;
   type: string;
   expiry_date: string;
+  restock_date: string;
 };

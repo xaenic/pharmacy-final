@@ -9,10 +9,12 @@ import { useEffect, useState } from "react";
 import { Product } from "@/lib/types/Product";
 import { useSearch } from "@/store/store";
 import { ClipLoader } from "react-spinners";
+import { IUser } from "@/lib/models/userModel";
+import RowUser from "./RowUser";
 export const dynamic = "force-dynamic";
-function Table({ results }: { results: Product[] }) {
-  const [products, setProducts] = useState<Product[]>(results);
-  const [old, setOld] = useState<Product[]>();
+function UsersTable({ results }: { results: any }) {
+  const [products, setProducts] = useState<IUser[] | null>(results);
+  const [old, setOld] = useState<IUser[] | null>();
   const [loading, setLoading] = useState(true);
   const formatDate = (dateString: string, ok = false) => {
     const date = new Date(dateString);
@@ -56,10 +58,8 @@ function Table({ results }: { results: Product[] }) {
       }
       return;
     }
-    const filtered = old?.filter(
-      (product) =>
-        product.product_name.toLowerCase().includes(term) ||
-        product.code.includes(term)
+    const filtered = old?.filter((product) =>
+      product.firstname.toLowerCase().includes(term)
     );
     if (filtered) setProducts(filtered);
   }, [term, old]);
@@ -79,42 +79,33 @@ function Table({ results }: { results: Product[] }) {
           <thead className="text-sm   rounded-md  border-b border-gray-200">
             <tr>
               <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center ">
-                CODE
+                Name
               </th>
               <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
                 Image
               </th>
 
               <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
-                Product Name
+                Phone
+              </th>
+              <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
+                Email
               </th>
 
               <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
-                Price
+                Designation
               </th>
-              <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
-                EXPIRY DATE
-              </th>
-              <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
-                RESTOCK DATE
-              </th>
-              <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
-                Generic Name
-              </th>
-
-              <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
-                Quantity
-              </th>
+              <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center"></th>
+              <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center"></th>
               <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center">
                 Status
               </th>
-
               <th className="border px-4 py-4 font-medium border-none text-gray-500 text-center"></th>
             </tr>
           </thead>
           <tbody id="tbody" className="relative">
-            {products?.map((e: Product, i: number) => (
-              <RowAnimated key={i} e={e} i={i} />
+            {products?.map((e: IUser, i: number) => (
+              <RowUser key={i} e={e} i={i} />
             ))}
           </tbody>
         </table>
@@ -123,4 +114,4 @@ function Table({ results }: { results: Product[] }) {
   );
 }
 
-export default Table;
+export default UsersTable;

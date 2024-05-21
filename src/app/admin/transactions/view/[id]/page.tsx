@@ -12,6 +12,8 @@ import Image from "next/image";
 import { getBillingDetail, getTransaction } from "@/lib/db/transaction";
 import { Transaction } from "@/lib/types/Transaction";
 import { ok } from "assert";
+import ButtonPdf from "@/components/ui/ButtonPdf";
+import ExportToPDFButton from "@/components/ui/ButtonPdf";
 interface Props {
   params: { id: any };
 }
@@ -103,9 +105,20 @@ export default async function TransactionView({ params }: Props) {
               </Link>
             </div>
           </div>
+          <div className="flex justify-end">
+            <ExportToPDFButton
+              transaction={transaction}
+              billing={billing}
+              total={total}
+            />
+          </div>
         </div>
+
         <div className="mt-10 border bg-white p-5">
-          <h1 className="text-center text-2xl font-medium">Pharmacy</h1>
+          <div className="flex justify-center">
+            <h1 className="text-center text-2xl font-medium">Pharmacy</h1>
+          </div>
+
           <div className="flex p-5 justify-between items-center">
             <div className="text-sm flex flex-col">
               <span className="text-gray-600 font-medium">

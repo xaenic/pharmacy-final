@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import { ClipLoader, FadeLoader } from "react-spinners";
 import { motion } from "framer-motion";
 import { DatePicker } from "@nextui-org/date-picker";
+import { now, parseAbsoluteToLocal } from "@internationalized/date";
 function EditModal({ id, categories }: { id: string | null; categories: any }) {
   const { setModal } = useModalStore();
   const [state, formAction] = useFormState(updateNewProduct, {
@@ -27,6 +28,7 @@ function EditModal({ id, categories }: { id: string | null; categories: any }) {
   const [loading, setLoading] = useState(true);
   const form = useRef(null);
   const router = useRouter();
+
   useEffect(() => {
     if (form.current) {
       if (state?.message == "Success") {
@@ -47,6 +49,8 @@ function EditModal({ id, categories }: { id: string | null; categories: any }) {
       try {
         if (!id) return;
         const ok = await getProductById(id);
+
+        console.log(ok.expiry_date);
         setProduct(ok);
         setLoading(false);
       } catch (error) {
@@ -58,7 +62,15 @@ function EditModal({ id, categories }: { id: string | null; categories: any }) {
 
     // Specify dependencies: id and getProductById
   }, [id]);
-
+  const convertToDateValue = (date: Date) => {
+    if (!date) return null;
+    const jsDate = new Date(date);
+    return {
+      year: jsDate.getFullYear(),
+      month: jsDate.getMonth() + 1, // JavaScript months are 0-based
+      day: jsDate.getDate(),
+    };
+  };
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -195,6 +207,29 @@ function EditModal({ id, categories }: { id: string | null; categories: any }) {
                   defaultValue={product?.quantity}
                   className="text-xs bg-transparent outline-none"
                 />
+                <input
+                  name="prevQ"
+                  type="number"
+                  hidden
+                  placeholder="Enter product quantity"
+                  defaultValue={product?.quantity}
+                  className="text-xs bg-transparent outline-none"
+                />
+                <DatePicker
+                  defaultValue={
+                    product?.restock_date
+                      ? parseAbsoluteToLocal(
+                          new Date(product?.restock_date).toISOString()
+                        )
+                      : null
+                  }
+                  hidden
+                  granularity="day"
+                  name="restock"
+                  className="hidden"
+                  size="sm"
+                  variant="bordered"
+                />
               </div>
             </div>
 
@@ -229,7 +264,16 @@ function EditModal({ id, categories }: { id: string | null; categories: any }) {
             </div>
             <div className="flex-col gap-2 flex">
               <h2 className="text-xs my-auto ">Expiry Date</h2>
-              <DatePicker name="expiry" size="sm" variant="bordered" />
+
+              <DatePicker
+                defaultValue={parseAbsoluteToLocal(
+                  new Date(product?.expiry_date).toISOString()
+                )}
+                granularity="day"
+                name="expiry"
+                size="sm"
+                variant="bordered"
+              />
             </div>
             <div className="flex flex-col gap-2 col-span-2">
               <h2 className="text-xs my-auto">Description</h2>

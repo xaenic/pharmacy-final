@@ -4,6 +4,7 @@ import SearchIcon from "@/components/icons/SearchIcon";
 import { addTransaction } from "@/lib/action";
 import { addToCart } from "@/lib/db/cart_item";
 import { Product } from "@/lib/types/Product";
+import { Transaction_Item } from "@/lib/types/Transaction";
 import { useModalStore } from "@/store/store";
 import { Button } from "@nextui-org/button";
 import { Select, SelectItem } from "@nextui-org/select";
@@ -18,7 +19,7 @@ function ItemList({ products, user_id }: any) {
   const [placing, setPlacing] = useState(false);
   const [items, setItems] = useState(products);
   const [oldItems, setOldItems] = useState(products);
-  const [addedItems, setAddedItems] = useState<Product[]>([]);
+  const [addedItems, setAddedItems] = useState<Transaction_Item[]>([]);
   const { setModal } = useModalStore();
   const router = useRouter();
 
@@ -47,7 +48,7 @@ function ItemList({ products, user_id }: any) {
     },
   ];
 
-  const removeCartHandler = async (product: Product) => {
+  const removeCartHandler = async (product: Transaction_Item) => {
     const yawa = addedItems;
     const existingItemIndex = yawa.findIndex((item) => item.id === product.id);
 
@@ -57,7 +58,7 @@ function ItemList({ products, user_id }: any) {
 
   const addToCartHandler = async (
     stocks: number,
-    product: Product,
+    product: Transaction_Item,
     quantity: number
   ) => {
     if (new Date(product.expiry_date) < new Date()) {
@@ -68,14 +69,16 @@ function ItemList({ products, user_id }: any) {
       toast.error("No stocks available");
       return;
     }
-
+    let qty = quantity;
+    console.log(quantity);
+    product["qty"] = quantity;
     const yawa = addedItems;
     const existingItemIndex = yawa.findIndex((item) => item.id === product.id);
 
     if (existingItemIndex > -1) {
-      yawa[existingItemIndex].quantity += quantity;
+      yawa[existingItemIndex]["qty"] += quantity;
     } else {
-      yawa.push({ ...product, quantity });
+      yawa.push({ ...product });
     }
     setAddedItems([...yawa]);
     toast.success("Added Successfully!");
@@ -143,7 +146,7 @@ function ItemList({ products, user_id }: any) {
                   <h2 className="text-md max-w-xs line-clamp-1">
                     {item.product_name}
                   </h2>
-                  <p className="">x {item.quantity}</p>{" "}
+                  <p className="">x {item.qty}</p>{" "}
                   <p className="text-sky-500">₱{item.price}</p>
                 </div>
               </div>
@@ -154,7 +157,9 @@ function ItemList({ products, user_id }: any) {
               <Button
                 onClick={async () => {
                   setPlacing(true);
-                  await addTransaction(addedItems);
+
+                  const ok = await addTransaction(addedItems);
+                  router.push(`/admin/transactions/view/${ok}`);
                   toast.success("Successfully placed");
                   setAddedItems([]);
                   setPlacing(false);
@@ -204,7 +209,7 @@ function ItemList({ products, user_id }: any) {
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-4 gap-2">
           {items
-            ? items.map((e: Product) => (
+            ? items.map((e: Transaction_Item) => (
                 <div
                   key={e.id}
                   className="p-4 gap-2 flex justify-center items-start flex-col border border-gray-200 h-72"

@@ -48,17 +48,8 @@ export default async function Shop() {
               </div>
             </section>
             <section className="bg-white p-5 lg:p-10 flex items-start gap-4">
-              <aside className="p-5 border rounded-sm hidden lg:flex flex-col gap-4 ">
-                <h1 className="text-lg font-medium">Product Categories</h1>
-                <ul className="text-sm text-gray-500 font-normal">
-                  {categroies.map((e: any, i: number) => (
-                    <li key={i} className="border-t p-2">
-                      <Link href="/">{e.category_name}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </aside>
               <Products
+                categories={categroies}
                 products={nonExpiredProducts}
                 user_id={session?.user.staff_id}
               />
