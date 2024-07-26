@@ -1,3 +1,7 @@
+Admin Login Details
+- admin@gmail.com
+- admin123
+- 
 # Pharmacy Management System with Next.js
 
 Welcome to the Pharmacy Management System built with Next.js! This project provides both an admin dashboard for managing pharmacy operations and a customer view for convenient browsing and purchasing of pharmacy products.
