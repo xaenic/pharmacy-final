@@ -1,4 +1,4 @@
-Admin Login Details
+# Admin Login Details
 - admin@gmail.com
 - admin123
 # Pharmacy Management System with Next.js
